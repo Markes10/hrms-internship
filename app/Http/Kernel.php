@@ -4,6 +4,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Schedule;
 
 class Kernel extends HttpKernel
 {
@@ -32,10 +33,10 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-    'throttle:api',
-    \Illuminate\Routing\Middleware\SubstituteBindings::class,
-],
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            'throttle:api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
     ];
 
     /**
@@ -50,4 +51,11 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('reminders:daily-updates')
+            ->weekdays()          
+            ->dailyAt('17:30');   
+    }
+
 }

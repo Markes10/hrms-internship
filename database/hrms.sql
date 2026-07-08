@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2025 at 02:43 PM
+-- Generation Time: Sep 04, 2025 at 05:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,20 +43,34 @@ CREATE TABLE `attendance` (
   `punch_in_again_remarks` text DEFAULT NULL,
   `punch_out_again` text DEFAULT NULL,
   `punch_out_again_remarks` text DEFAULT NULL,
-  `overtime_working_hours` time DEFAULT NULL
+  `overtime_working_hours` time DEFAULT NULL,
+  `latitude` text DEFAULT NULL,
+  `longitude` text DEFAULT NULL,
+  `location_type` enum('Home','Company') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`id`, `user_id`, `date`, `punch_in`, `punch_in_remarks`, `punch_out`, `punch_out_remarks`, `total_working_hours`, `created_at`, `updated_at`, `deleted_at`, `punch_in_again`, `punch_in_again_remarks`, `punch_out_again`, `punch_out_again_remarks`, `overtime_working_hours`) VALUES
-(44, 7, '2025-07-31', '2025-07-31 19:04:20', NULL, NULL, NULL, NULL, '2025-07-31 19:04:20', '2025-07-31 19:04:20', NULL, NULL, NULL, NULL, NULL, '00:00:00'),
-(45, 7, '2025-08-01', '2025-08-01 14:01:27', NULL, '2025-08-01 14:17:28', NULL, '00:16:01', '2025-08-01 14:01:27', '2025-08-01 14:17:28', NULL, NULL, NULL, NULL, NULL, '00:00:00'),
-(69, 8, '2025-08-01', '2025-08-01 20:22:37', NULL, '2025-08-01 20:22:55', 'out', '00:00:18', '2025-08-01 20:22:37', '2025-08-01 20:30:46', NULL, '2025-08-01 20:30:41', NULL, '2025-08-01 20:30:46', 'aaaa', '00:00:05'),
-(80, 7, '2025-08-02', '2025-08-02 16:25:15', 'punch in', '2025-08-02 16:25:29', 'punchout', '00:00:14', '2025-08-02 16:25:15', '2025-08-02 16:26:36', NULL, '2025-08-02 16:26:33', NULL, '2025-08-02 16:26:36', NULL, '00:00:36'),
-(82, 7, '2025-08-04', '2025-08-04 22:12:27', 'Got up late...', '2025-08-04 22:13:15', 'Finished my work', '00:00:48', '2025-08-04 22:12:27', '2025-08-08 17:38:56', NULL, '2025-08-04 22:14:21', 'Another bug', '2025-08-04 22:14:34', 'Done for day', '00:00:47'),
-(83, 7, '2025-08-08', '2025-08-08 17:39:08', 'Punchin', '2025-08-08 18:08:49', 'out', '00:29:41', '2025-08-08 17:39:08', '2025-08-08 18:08:49', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `attendance` (`id`, `user_id`, `date`, `punch_in`, `punch_in_remarks`, `punch_out`, `punch_out_remarks`, `total_working_hours`, `created_at`, `updated_at`, `deleted_at`, `punch_in_again`, `punch_in_again_remarks`, `punch_out_again`, `punch_out_again_remarks`, `overtime_working_hours`, `latitude`, `longitude`, `location_type`) VALUES
+(44, 7, '2025-07-31', '2025-07-31 19:04:20', NULL, NULL, NULL, NULL, '2025-07-31 19:04:20', '2025-07-31 19:04:20', NULL, NULL, NULL, NULL, NULL, '00:00:00', NULL, NULL, NULL),
+(45, 7, '2025-08-01', '2025-08-01 14:01:27', NULL, '2025-08-01 14:17:28', NULL, '00:16:01', '2025-08-01 14:01:27', '2025-08-01 14:17:28', NULL, NULL, NULL, NULL, NULL, '00:00:00', NULL, NULL, NULL),
+(69, 8, '2025-08-01', '2025-08-01 20:22:37', NULL, '2025-08-01 20:22:55', 'out', '00:00:18', '2025-08-01 20:22:37', '2025-08-01 20:30:46', NULL, '2025-08-01 20:30:41', NULL, '2025-08-01 20:30:46', 'aaaa', '00:00:05', NULL, NULL, NULL),
+(80, 7, '2025-08-02', '2025-08-02 16:25:15', 'punch in', '2025-08-02 16:25:29', 'punchout', '00:00:14', '2025-08-02 16:25:15', '2025-08-02 16:26:36', NULL, '2025-08-02 16:26:33', NULL, '2025-08-02 16:26:36', NULL, '00:00:36', NULL, NULL, NULL),
+(82, 7, '2025-08-04', '2025-08-04 22:12:27', 'Got up late...', '2025-08-04 22:13:15', 'Finished my work', '00:00:48', '2025-08-04 22:12:27', '2025-08-08 17:38:56', NULL, '2025-08-04 22:14:21', 'Another bug', '2025-08-04 22:14:34', 'Done for day', '00:00:47', NULL, NULL, NULL),
+(83, 7, '2025-08-08', '2025-08-08 17:39:08', 'Punchin', '2025-08-08 18:08:49', 'out', '00:29:41', '2025-08-08 17:39:08', '2025-08-08 18:08:49', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(84, 7, '2025-08-10', '2025-08-10 13:49:02', 'Got up late.', '2025-08-10 13:50:08', 'Got some appointment', '00:01:06', '2025-08-10 13:49:02', '2025-08-10 13:50:08', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(89, 7, '2025-08-11', '2025-08-11 20:05:06', NULL, '2025-08-11 20:05:50', NULL, '00:00:44', '2025-08-11 20:05:06', '2025-08-11 20:05:50', NULL, NULL, NULL, NULL, NULL, NULL, '15.6224308', '73.8811644', 'Home'),
+(90, 7, '2025-08-20', '2025-08-13 15:11:50', NULL, '2025-08-13 15:11:55', NULL, '07:00:05', '2025-08-13 15:11:50', '2025-08-19 21:09:56', NULL, NULL, NULL, NULL, NULL, NULL, '15.6224161', '73.8811619', 'Company'),
+(91, 6, '2025-08-13', '2025-08-13 15:20:04', 'Starting work', '2025-08-13 15:25:14', 'Finished work', '00:05:10', '2025-08-13 15:20:04', '2025-08-13 15:27:17', NULL, '2025-08-13 15:26:21', 'Working overtime', '2025-08-13 15:27:17', 'Done overtime', '00:00:56', '15.4995', '73.8278', 'Company'),
+(92, NULL, '2025-08-18', '2025-08-18 13:18:34', 'Starting work with postman', NULL, NULL, NULL, '2025-08-18 13:18:35', '2025-08-19 20:58:13', NULL, NULL, NULL, NULL, NULL, NULL, '15.4995', '73.8278', 'Company'),
+(93, 7, '2025-08-19', '2025-08-19 09:24:05', 'late due to traffic', '2025-08-19 19:06:31', NULL, '04:11:26', '2025-08-19 15:55:05', '2025-08-20 11:06:10', NULL, '2025-08-19 20:48:30', NULL, '2025-08-19 20:48:34', '7t', '00:00:04', '15.6224257', '73.8811267', 'Company'),
+(94, 7, '2025-08-21', '2025-08-21 12:29:30', NULL, '2025-08-21 12:29:43', NULL, '09:00:13', '2025-08-21 12:29:30', '2025-08-21 12:31:23', NULL, NULL, NULL, NULL, NULL, NULL, '15.6224363', '73.8811448', 'Company'),
+(95, 7, '2025-08-25', '2025-08-25 12:06:32', NULL, '2025-08-25 12:37:22', NULL, '00:30:50', '2025-08-25 12:06:32', '2025-08-25 12:37:22', NULL, NULL, NULL, NULL, NULL, NULL, '15.6305', '73.8108', 'Home'),
+(96, 6, '2025-09-02', '2025-09-02 18:42:33', 'Starting work with postman', '2025-09-02 18:43:03', 'Finished work', '00:00:30', '2025-09-02 18:42:33', '2025-09-02 18:44:35', NULL, '2025-09-02 18:44:18', 'Working overtime', '2025-09-02 18:44:35', 'Done overtime', '00:00:17', '15.4995', '73.8278', 'Company'),
+(98, 7, '2025-09-03', '2025-09-03 9:29:47', NULL, '2025-09-02 18:43:03', NULL, '00:30:50', '2025-09-03 11:57:47', '2025-09-04 14:30:11', NULL, NULL, NULL, NULL, NULL, NULL, '15.6223919', '73.881157', 'Company'),
+(99, 6, '2025-09-04', '2025-09-04 14:30:40', NULL, '2025-09-04 14:31:01', NULL, '07:02:21', '2025-09-04 14:30:40', '2025-09-04 14:31:35', NULL, NULL, NULL, NULL, NULL, NULL, '15.6223627', '73.8811543', 'Home');
 
 -- --------------------------------------------------------
 
@@ -136,7 +150,12 @@ INSERT INTO `breaks` (`id`, `attendance_id`, `break_type`, `break_start`, `break
 (94, 83, 'Morning Tea', '17:56:25', '17:56:35', '00:00:10', '2025-08-08 17:56:25', '2025-08-08 17:56:35', NULL),
 (95, 83, 'Lunch', '17:56:39', '17:56:48', '00:00:09', '2025-08-08 17:56:39', '2025-08-08 17:56:48', NULL),
 (96, 83, 'Evening Tea', '17:56:54', '17:57:00', '00:00:06', '2025-08-08 17:56:54', '2025-08-08 17:57:00', NULL),
-(97, 83, 'Custom', '17:57:05', '18:08:41', '00:11:36', '2025-08-08 17:57:05', '2025-08-08 18:08:41', NULL);
+(97, 83, 'Custom', '17:57:05', '18:08:41', '00:11:36', '2025-08-08 17:57:05', '2025-08-08 18:08:41', NULL),
+(98, 84, 'Morning Tea', '13:49:09', '13:49:16', '00:00:07', '2025-08-10 13:49:09', '2025-08-10 13:49:16', NULL),
+(99, 84, 'Lunch', '13:49:21', '13:49:29', '00:00:08', '2025-08-10 13:49:21', '2025-08-10 13:49:29', NULL),
+(100, 84, 'Evening Tea', '13:49:32', '13:49:40', '00:00:08', '2025-08-10 13:49:32', '2025-08-10 13:49:40', NULL),
+(101, 84, 'Custom', '13:49:43', '13:49:49', '00:00:06', '2025-08-10 13:49:43', '2025-08-10 13:49:49', NULL),
+(102, 91, 'Lunch', '15:23:16', '15:24:34', '00:01:18', '2025-08-13 15:23:16', '2025-08-13 15:24:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -149,13 +168,6 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('demergsystemsgoaindia-cache-spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:36:{i:0;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:15:\"create employee\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:1;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:15:\"delete employee\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:2;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:13:\"view employee\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:4;i:1;i:6;}}i:3;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:10:\"view roles\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:4;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:12:\"create roles\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:5;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:12:\"delete roles\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:6;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:10:\"edit roles\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:7;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:13:\"edit employee\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:4;i:1;i:6;}}i:8;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:10:\"view users\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:9;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:10:\"edit users\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:10;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:16:\"view permissions\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:11;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:18:\"create permissions\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:12;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:16:\"edit permissions\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:13;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:18:\"delete permissions\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:14;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:11:\"apply leave\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:4;i:1;i:6;}}i:15;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:15:\"view all leaves\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:4;i:1;i:6;}}i:16;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:13:\"approve leave\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:17;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:17:\"attendance report\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:18;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:14:\"create holiday\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:19;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:14:\"delete holiday\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:20;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:14:\"create project\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:21;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:12:\"view project\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:4;i:1;i:6;}}i:22;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:12:\"edit project\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:23;a:4:{s:1:\"a\";i:32;s:1:\"b\";s:14:\"delete project\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:24;a:4:{s:1:\"a\";i:33;s:1:\"b\";s:11:\"create task\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:25;a:4:{s:1:\"a\";i:34;s:1:\"b\";s:11:\"delete task\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:26;a:4:{s:1:\"a\";i:35;s:1:\"b\";s:9:\"edit task\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:27;a:4:{s:1:\"a\";i:36;s:1:\"b\";s:17:\"approve timesheet\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:28;a:4:{s:1:\"a\";i:37;s:1:\"b\";s:16:\"reject timesheet\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:29;a:4:{s:1:\"a\";i:38;s:1:\"b\";s:16:\"create timesheet\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:4;i:1;i:6;}}i:30;a:4:{s:1:\"a\";i:39;s:1:\"b\";s:14:\"edit timesheet\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:4;i:1;i:6;}}i:31;a:4:{s:1:\"a\";i:40;s:1:\"b\";s:14:\"view timesheet\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:4;i:1;i:6;}}i:32;a:4:{s:1:\"a\";i:41;s:1:\"b\";s:17:\"create leave type\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:33;a:4:{s:1:\"a\";i:42;s:1:\"b\";s:15:\"edit leave type\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:34;a:4:{s:1:\"a\";i:43;s:1:\"b\";s:15:\"view leave type\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:35;a:4:{s:1:\"a\";i:44;s:1:\"b\";s:17:\"delete leave type\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}}s:5:\"roles\";a:2:{i:0;a:3:{s:1:\"a\";i:4;s:1:\"b\";s:5:\"Admin\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:6;s:1:\"b\";s:8:\"Employee\";s:1:\"c\";s:3:\"web\";}}}', 1754726617);
 
 -- --------------------------------------------------------
 
@@ -172,29 +184,6 @@ CREATE TABLE `cache_locks` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `companies`
---
-
-CREATE TABLE `companies` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
-  `system_title` varchar(255) NOT NULL DEFAULT 'HRMS',
-  `logo` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `companies`
---
-
-INSERT INTO `companies` (`id`, `name`, `description`, `system_title`, `logo`, `created_at`, `updated_at`) VALUES
-(1, 'Demerg Company', 'Human Resource Management System', 'HRMS', 'images/logo.png', '2025-07-18 00:33:03', '2025-07-20 23:13:39');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `company_profile`
 --
 
@@ -203,50 +192,24 @@ CREATE TABLE `company_profile` (
   `company_name` varchar(255) NOT NULL,
   `company_description` text DEFAULT NULL,
   `company_logo` varchar(255) DEFAULT NULL,
-  `company_default_colour` varchar(255) DEFAULT NULL,
+  `navbar_color` varchar(255) DEFAULT NULL,
+  `sidebar_color` varchar(255) DEFAULT NULL,
+  `primary_color` varchar(255) DEFAULT NULL,
+  `text_color` varchar(255) DEFAULT NULL,
+  `footer_color` varchar(255) DEFAULT NULL,
   `system_title` varchar(255) NOT NULL DEFAULT 'HRMS',
+  `timings` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`timings`)),
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `employees`
+-- Dumping data for table `company_profile`
 --
 
-CREATE TABLE `employees` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `gender` enum('male','female','other') DEFAULT NULL,
-  `date_of_birth` date DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `address` text DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `state` varchar(255) DEFAULT NULL,
-  `postal_code` varchar(255) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
-  `joining_date` date DEFAULT NULL,
-  `employment_type` enum('full_time','part_time','intern') NOT NULL DEFAULT 'full_time',
-  `status` enum('active','inactive','terminated') NOT NULL DEFAULT 'active',
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `resume` varchar(255) DEFAULT NULL,
-  `id_proof` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `employees`
---
-
-INSERT INTO `employees` (`id`, `name`, `gender`, `date_of_birth`, `email`, `phone`, `address`, `city`, `state`, `postal_code`, `country`, `joining_date`, `employment_type`, `status`, `user_id`, `resume`, `id_proof`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Shubham Chodankar', NULL, NULL, 'employee01@example.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'full_time', 'active', 7, NULL, NULL, '2025-07-31 10:22:18', '2025-07-31 10:22:18', NULL),
-(2, 'Shivam Bandekar', NULL, NULL, 'employee02@example.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'full_time', 'active', 10, NULL, NULL, '2025-07-31 10:22:18', '2025-07-31 10:22:18', NULL),
-(11, 'Viren Viren', NULL, NULL, 'employee03@example.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'full_time', 'active', 8, NULL, NULL, '2025-08-02 18:19:28', '2025-08-02 18:22:07', NULL);
+INSERT INTO `company_profile` (`id`, `company_name`, `company_description`, `company_logo`, `navbar_color`, `sidebar_color`, `primary_color`, `text_color`, `footer_color`, `system_title`, `timings`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Demerg Systems India', 'Software company in Panaji, Goa.', 'logo.png', '#c2c2c2', '#1d3c72', '#ffffff', '#e0e6ef', '#22417f', 'HRMS', '[{\"day_from\":\"monday\",\"day_to\":\"friday\",\"start\":\"09:00\",\"end\":\"18:00\"}]', '2025-08-18 18:17:35', '2025-08-25 11:49:36', NULL);
 
 -- --------------------------------------------------------
 
@@ -287,7 +250,14 @@ CREATE TABLE `holidays` (
 
 INSERT INTO `holidays` (`id`, `title`, `date`, `type`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Casually', '2025-07-28', 'company', 'Enjoy bro', '2025-07-27 19:22:13', '2025-07-28 10:46:34', NULL),
-(6, 'Addidtioin', '2025-08-05', 'national', NULL, '2025-08-02 12:47:10', '2025-08-02 12:47:10', NULL);
+(9, 'Ganesh Chaturthi', '2025-08-27', 'festival', 'Ganesh Chaturthi Holidays', '2025-08-21 12:54:19', '2025-08-21 12:54:19', NULL),
+(10, 'Ganesh Chaturthi', '2025-08-28', 'festival', 'Ganesh Chaturthi', '2025-08-21 12:54:31', '2025-08-21 12:54:31', NULL),
+(11, 'Gandhi Jayanti', '2025-10-02', 'national', 'Gandhi Jayanti Holiday', '2025-08-21 12:55:09', '2025-08-21 12:55:09', NULL),
+(12, 'Dussehra', '2025-10-02', 'festival', 'Dussehra  (Vijaya Dashmi)', '2025-08-21 12:56:04', '2025-08-21 12:56:04', NULL),
+(13, 'Diwali', '2025-10-20', 'festival', 'Diwali', '2025-08-21 12:56:34', '2025-08-21 12:56:34', NULL),
+(14, 'Feast of St.Fransis Xavier', '2025-12-03', 'festival', 'Feast of St.Fransis Xavier Holiday', '2025-08-21 12:57:33', '2025-08-21 12:57:33', NULL),
+(15, 'Goa Liberation Day', '2025-12-19', 'national', 'Goa Liberation Day Holiday', '2025-08-21 12:58:08', '2025-08-21 12:58:08', NULL),
+(16, 'Christmas Day', '2025-12-25', 'festival', 'Christmas Day Holiday', '2025-08-21 12:58:37', '2025-08-21 12:58:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -338,6 +308,7 @@ CREATE TABLE `leaves` (
   `end_date` date DEFAULT NULL,
   `reason` text DEFAULT NULL,
   `status` enum('Pending','Approved','Rejected') NOT NULL DEFAULT 'Pending',
+  `proof_sick` varchar(255) DEFAULT NULL,
   `applied_on` datetime NOT NULL DEFAULT current_timestamp(),
   `approved_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
@@ -349,26 +320,39 @@ CREATE TABLE `leaves` (
 -- Dumping data for table `leaves`
 --
 
-INSERT INTO `leaves` (`id`, `user_id`, `leave_type_id`, `start_date`, `end_date`, `reason`, `status`, `applied_on`, `approved_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 6, 1, '2025-07-25', '2025-07-31', 'seedhzdsthadghjadghadghj', 'Approved', '2025-07-23 07:27:07', 6, '2025-07-23 07:27:07', '2025-07-23 07:29:06', NULL),
-(2, 6, 1, '2025-07-17', '2025-07-24', 'sdfgbsdthsdghswfg', 'Approved', '2025-07-23 09:33:21', 6, '2025-07-23 09:33:21', '2025-07-23 09:33:42', NULL),
-(3, 6, 1, '2025-07-24', '2025-07-31', 'dfbdbdfbdfbdf', 'Approved', '2025-07-23 12:35:22', 6, '2025-07-23 12:35:22', '2025-07-23 12:35:46', NULL),
-(4, 6, 1, '2025-07-24', '2025-07-25', 'fhjdrfhf', 'Rejected', '2025-07-24 08:05:16', 6, '2025-07-24 08:05:16', '2025-07-24 09:55:29', NULL),
-(5, 6, 2, '2025-08-01', '2025-08-03', 'Vacation', 'Rejected', '2025-07-24 09:16:51', 9, '2025-07-24 09:16:51', '2025-07-24 09:54:04', NULL),
-(6, 6, 1, '2025-08-01', '2025-08-03', 'maja', 'Approved', '2025-07-24 09:45:03', 9, '2025-07-24 09:45:03', '2025-07-24 09:53:44', NULL),
-(7, 6, 2, '2025-07-25', '2025-07-26', 'adfcaSDFASDFASDFSDF', 'Approved', '2025-07-24 11:10:24', 6, '2025-07-24 11:10:24', '2025-07-24 11:15:18', NULL),
-(8, 6, 1, '2025-08-01', '2025-08-03', 'Vacation', 'Approved', '2025-07-27 18:15:24', 6, '2025-07-27 18:15:24', '2025-07-27 18:49:19', NULL),
-(9, 6, 2, '2025-08-05', '2025-08-06', 'Marriage', 'Rejected', '2025-07-27 18:16:14', 6, '2025-07-27 18:16:14', '2025-07-27 18:29:23', NULL),
-(10, 6, 1, '2025-08-08', '2025-08-09', 'NOt feeling well...', 'Approved', '2025-08-02 12:52:12', 6, '2025-08-02 12:52:12', '2025-08-02 12:54:50', NULL),
-(11, 6, 2, '2025-08-09', '2025-08-09', 'Casually', 'Rejected', '2025-08-02 12:54:11', 6, '2025-08-02 12:54:11', '2025-08-02 12:55:19', NULL),
-(12, 6, 1, '2025-08-09', '2025-08-09', 'Not feeling well,wont be ablee to work.', 'Approved', '2025-08-08 12:54:03', 6, '2025-08-08 12:54:03', '2025-08-08 13:11:30', NULL),
-(13, 6, 3, '2025-08-09', '2025-08-11', 'sss', 'Rejected', '2025-08-08 13:04:29', 6, '2025-08-08 13:04:29', '2025-08-08 13:15:12', NULL),
-(14, 6, 3, '2025-08-09', '2025-08-09', 'sss', 'Approved', '2025-08-08 13:22:09', 6, '2025-08-08 13:22:09', '2025-08-08 13:22:14', NULL),
-(15, 6, 2, '2025-08-16', '2025-08-16', 'ssssssssssss', 'Approved', '2025-08-08 13:23:08', 6, '2025-08-08 13:23:08', '2025-08-08 13:23:14', NULL),
-(16, 6, 2, '2025-08-16', '2025-08-16', 'ukftukftui', 'Approved', '2025-08-08 13:27:20', 6, '2025-08-08 13:27:20', '2025-08-08 13:27:28', NULL),
-(17, 6, 2, '2025-08-09', '2025-08-09', 'yjr', 'Approved', '2025-08-08 13:33:58', 6, '2025-08-08 13:33:58', '2025-08-08 13:34:06', NULL),
-(18, 6, 6, '2025-08-09', '2025-08-09', 'sa', 'Approved', '2025-08-08 13:35:08', 6, '2025-08-08 13:35:08', '2025-08-08 13:35:13', NULL),
-(19, 6, 6, '2025-08-11', '2025-08-15', 'sssssssssssssssssssssss', 'Rejected', '2025-08-08 13:35:54', 6, '2025-08-08 13:35:54', '2025-08-08 13:36:03', NULL);
+INSERT INTO `leaves` (`id`, `user_id`, `leave_type_id`, `start_date`, `end_date`, `reason`, `status`, `proof_sick`, `applied_on`, `approved_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 6, 1, '2025-07-25', '2025-07-31', 'seedhzdsthadghjadghadghj', 'Approved', NULL, '2025-07-23 07:27:07', 6, '2025-07-23 07:27:07', '2025-07-23 07:29:06', NULL),
+(2, 6, 1, '2025-07-17', '2025-07-24', 'sdfgbsdthsdghswfg', 'Approved', NULL, '2025-07-23 09:33:21', 6, '2025-07-23 09:33:21', '2025-07-23 09:33:42', NULL),
+(3, 6, 1, '2025-07-24', '2025-07-31', 'dfbdbdfbdfbdf', 'Approved', NULL, '2025-07-23 12:35:22', 6, '2025-07-23 12:35:22', '2025-07-23 12:35:46', NULL),
+(4, 6, 1, '2025-07-24', '2025-07-25', 'fhjdrfhf', 'Rejected', NULL, '2025-07-24 08:05:16', 6, '2025-07-24 08:05:16', '2025-07-24 09:55:29', NULL),
+(5, 6, 2, '2025-08-01', '2025-08-03', 'Vacation', 'Rejected', NULL, '2025-07-24 09:16:51', 9, '2025-07-24 09:16:51', '2025-07-24 09:54:04', NULL),
+(6, 6, 1, '2025-08-01', '2025-08-03', 'maja', 'Approved', NULL, '2025-07-24 09:45:03', 9, '2025-07-24 09:45:03', '2025-07-24 09:53:44', NULL),
+(7, 6, 2, '2025-07-25', '2025-07-26', 'adfcaSDFASDFASDFSDF', 'Approved', NULL, '2025-07-24 11:10:24', 6, '2025-07-24 11:10:24', '2025-07-24 11:15:18', NULL),
+(8, 6, 1, '2025-08-01', '2025-08-03', 'Vacation', 'Approved', NULL, '2025-07-27 18:15:24', 6, '2025-07-27 18:15:24', '2025-07-27 18:49:19', NULL),
+(9, 6, 2, '2025-08-05', '2025-08-06', 'Marriage', 'Rejected', NULL, '2025-07-27 18:16:14', 6, '2025-07-27 18:16:14', '2025-07-27 18:29:23', NULL),
+(10, 6, 1, '2025-08-08', '2025-08-09', 'NOt feeling well...', 'Approved', NULL, '2025-08-02 12:52:12', 6, '2025-08-02 12:52:12', '2025-08-02 12:54:50', NULL),
+(11, 6, 2, '2025-08-09', '2025-08-09', 'Casually', 'Rejected', NULL, '2025-08-02 12:54:11', 6, '2025-08-02 12:54:11', '2025-08-02 12:55:19', NULL),
+(12, 6, 1, '2025-08-09', '2025-08-09', 'Not feeling well,wont be ablee to work.', 'Approved', NULL, '2025-08-08 12:54:03', 6, '2025-08-08 12:54:03', '2025-08-08 13:11:30', NULL),
+(13, 6, 3, '2025-08-09', '2025-08-11', 'sss', 'Rejected', NULL, '2025-08-08 13:04:29', 6, '2025-08-08 13:04:29', '2025-08-08 13:15:12', NULL),
+(14, 6, 3, '2025-08-09', '2025-08-09', 'sss', 'Approved', NULL, '2025-08-08 13:22:09', 6, '2025-08-08 13:22:09', '2025-08-08 13:22:14', NULL),
+(15, 6, 2, '2025-08-16', '2025-08-16', 'ssssssssssss', 'Approved', NULL, '2025-08-08 13:23:08', 6, '2025-08-08 13:23:08', '2025-08-08 13:23:14', NULL),
+(16, 6, 2, '2025-08-16', '2025-08-16', 'ukftukftui', 'Approved', NULL, '2025-08-08 13:27:20', 6, '2025-08-08 13:27:20', '2025-08-08 13:27:28', NULL),
+(17, 6, 2, '2025-08-09', '2025-08-09', 'yjr', 'Approved', NULL, '2025-08-08 13:33:58', 6, '2025-08-08 13:33:58', '2025-08-08 13:34:06', NULL),
+(18, 6, 6, '2025-08-09', '2025-08-09', 'sa', 'Approved', NULL, '2025-08-08 13:35:08', 6, '2025-08-08 13:35:08', '2025-08-08 13:35:13', NULL),
+(19, 6, 6, '2025-08-11', '2025-08-15', 'sssssssssssssssssssssss', 'Rejected', NULL, '2025-08-08 13:35:54', 6, '2025-08-08 13:35:54', '2025-08-08 13:36:03', NULL),
+(21, 7, 5, '2025-08-20', '2025-08-20', 'Ganesh (reject this)', 'Approved', NULL, '2025-08-20 15:35:21', 6, '2025-08-13 15:35:21', '2025-08-19 22:06:31', NULL),
+(22, 7, 1, '2025-08-20', '2025-08-20', 'aaaaaaaaa', 'Pending', NULL, '2025-08-20 17:53:14', NULL, '2025-08-20 17:53:14', '2025-08-20 17:53:14', NULL),
+(23, 7, 1, '2025-08-20', '2025-08-21', 'testing laeave documen', 'Pending', NULL, '2025-08-20 18:05:37', NULL, '2025-08-20 18:05:37', '2025-08-20 18:05:37', NULL),
+(24, 7, 1, '2025-08-28', '2025-08-30', 'testing sickleave', 'Pending', NULL, '2025-08-20 18:09:40', NULL, '2025-08-20 18:09:40', '2025-08-20 18:09:40', NULL),
+(25, 7, 1, '2025-08-20', '2025-08-23', 'Testing sick leave', 'Pending', 'sick_proofs/qqQnykmF63JvFbHTVsGDm99C6yXTN2Hulc1elxS6.jpg', '2025-08-20 18:16:39', NULL, '2025-08-20 18:16:39', '2025-08-20 18:16:39', NULL),
+(26, 6, 1, '2025-08-25', '2025-08-28', 'aaa', 'Pending', NULL, '2025-08-25 11:51:20', NULL, '2025-08-25 11:51:20', '2025-08-25 11:51:20', NULL),
+(27, 6, 2, '2025-08-25', '2025-08-30', 'sss', 'Pending', NULL, '2025-08-25 21:22:23', NULL, '2025-08-25 21:22:23', '2025-08-25 21:22:23', NULL),
+(28, 6, 1, '2025-08-25', '2025-09-01', 'ss', 'Pending', NULL, '2025-08-25 21:22:42', NULL, '2025-08-25 21:22:42', '2025-08-25 21:22:42', NULL),
+(29, 6, 1, '2025-08-25', '2025-08-29', 'w', 'Pending', NULL, '2025-08-25 21:24:05', NULL, '2025-08-25 21:24:05', '2025-08-25 21:24:05', NULL),
+(30, 7, 1, '2025-08-25', '2025-09-06', 'qqq', 'Pending', NULL, '2025-08-25 21:40:27', NULL, '2025-08-25 21:40:27', '2025-08-25 21:40:27', NULL),
+(31, 6, 1, '2025-08-26', '2025-09-02', 'testing sick leave validation', 'Pending', 'sick_proofs/h46CqepiEJhCS7YqDZa3JtqKNXVrD0gxUxQElX0l.png', '2025-08-26 00:12:02', NULL, '2025-08-26 00:12:02', '2025-08-26 00:12:02', NULL),
+(32, 6, 6, '2025-09-02', '2025-09-19', 'tyj', 'Pending', NULL, '2025-09-02 21:05:53', NULL, '2025-09-02 21:05:53', '2025-09-02 21:05:53', NULL),
+(33, 6, 1, '2025-09-02', '2025-09-03', 's', 'Pending', NULL, '2025-09-02 21:08:25', NULL, '2025-09-02 21:08:25', '2025-09-02 21:08:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -399,7 +383,9 @@ INSERT INTO `leave_types` (`id`, `name`, `description`, `created_at`, `updated_a
 (7, 'Study Leave', 'For exams or education.', '2025-07-23 07:26:41', '2025-08-08 12:42:27', NULL),
 (9, 'aa', 'aa', '2025-08-06 15:36:11', '2025-08-06 15:38:30', '2025-08-06 15:38:30'),
 (10, '//', NULL, '2025-08-08 12:31:50', '2025-08-08 12:31:56', '2025-08-08 12:31:56'),
-(11, 'temp', 'tempfxvbdf', '2025-08-08 12:43:49', '2025-08-08 12:44:05', '2025-08-08 12:44:05');
+(11, 'temp', 'tempfxvbdf', '2025-08-08 12:43:49', '2025-08-13 16:25:38', '2025-08-13 16:25:38'),
+(12, 'Updated Postman Leave', 'Leave for Postman', '2025-08-13 16:21:30', '2025-08-13 16:23:38', NULL),
+(13, 'Updated Postman Leavess', 'Leave for Postman', '2025-09-02 19:15:16', '2025-09-02 19:16:28', '2025-09-02 19:16:28');
 
 -- --------------------------------------------------------
 
@@ -476,10 +462,19 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\User', 9),
 (4, 'App\\Models\\User', 4),
 (4, 'App\\Models\\User', 5),
-(4, 'App\\Models\\User', 6),
+(4, 'App\\Models\\User', 14),
+(5, 'App\\Models\\User', 12),
 (6, 'App\\Models\\User', 7),
 (6, 'App\\Models\\User', 8),
-(6, 'App\\Models\\User', 10);
+(6, 'App\\Models\\User', 16),
+(6, 'App\\Models\\User', 21),
+(6, 'App\\Models\\User', 23),
+(6, 'App\\Models\\User', 24),
+(12, 'App\\Models\\User', 6),
+(14, 'App\\Models\\User', 19),
+(15, 'App\\Models\\User', 10),
+(15, 'App\\Models\\User', 20),
+(15, 'App\\Models\\User', 22);
 
 -- --------------------------------------------------------
 
@@ -488,14 +483,23 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 --
 
 CREATE TABLE `notifications` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT 0,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `deleted_at` datetime DEFAULT NULL
+  `id` char(36) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `notifiable_type` varchar(255) NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('7d0278be-d5e5-4e55-977b-dff45dbf5524', 'App\\Notifications\\PunchInReminderNotification', 'App\\Models\\User', 6, '{\"message\":\"Reminder: Please punch in for today.\",\"url\":\"http:\\/\\/localhost:8000\\/attendance\"}', '2025-08-12 11:05:46', '2025-08-12 11:05:05', '2025-08-12 11:05:46'),
+('945bcf14-e489-4aaa-98b3-9a52d8f5a6df', 'App\\Notifications\\PunchInReminderNotification', 'App\\Models\\User', 10, '{\"message\":\"Reminder: Please punch in for today.\",\"url\":\"http:\\/\\/localhost:8000\\/attendance\"}', NULL, '2025-08-12 10:41:50', '2025-08-12 10:41:50');
 
 -- --------------------------------------------------------
 
@@ -508,6 +512,56 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payrolls`
+--
+
+CREATE TABLE `payrolls` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `month` varchar(255) NOT NULL,
+  `basic` decimal(10,2) NOT NULL,
+  `hra` decimal(10,2) NOT NULL,
+  `allowances` decimal(10,2) NOT NULL,
+  `tax_amount` decimal(10,2) NOT NULL,
+  `pf_amount` decimal(10,2) NOT NULL,
+  `esi_amount` decimal(10,2) NOT NULL,
+  `gross_salary` decimal(10,2) NOT NULL,
+  `net_salary` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payrolls`
+--
+
+INSERT INTO `payrolls` (`id`, `user_id`, `month`, `basic`, `hra`, `allowances`, `tax_amount`, `pf_amount`, `esi_amount`, `gross_salary`, `net_salary`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(13, 6, 'Aug, 2025', 40000.00, 5000.00, 6000.00, 2000.00, 2800.00, 3600.00, 51000.00, 42600.00, '2025-08-12 07:07:49', '2025-08-12 07:15:07', '2025-08-12 07:15:07'),
+(14, 7, 'Aug, 2025', 3000.00, 5000.00, 4000.00, 180.00, 240.00, 300.00, 12000.00, 11280.00, '2025-08-12 07:07:49', '2025-08-12 07:15:07', '2025-08-12 07:15:07'),
+(16, 8, 'Aug, 2025', 20000.00, 5000.00, 40000.00, 1000.00, 800.00, 1200.00, 65000.00, 62000.00, '2025-08-12 07:10:09', '2025-08-12 07:14:51', '2025-08-12 07:14:51'),
+(17, 6, 'Aug, 2025', 40000.00, 5000.00, 6000.00, 2000.00, 2800.00, 3600.00, 51000.00, 42600.00, '2025-08-12 14:05:34', '2025-08-12 14:05:45', '2025-08-12 14:05:45'),
+(18, 7, 'Aug, 2025', 3000.00, 5000.00, 4000.00, 180.00, 240.00, 300.00, 12000.00, 11280.00, '2025-08-12 14:05:34', '2025-08-12 14:05:38', '2025-08-12 14:05:38'),
+(19, 8, 'Aug, 2025', 20000.00, 5000.00, 40000.00, 1000.00, 800.00, 1200.00, 65000.00, 62000.00, '2025-08-12 14:05:34', '2025-08-12 14:05:48', '2025-08-12 14:05:48'),
+(20, 7, 'Aug, 2025', 3000.00, 5000.00, 4000.00, 180.00, 240.00, 300.00, 12000.00, 11280.00, '2025-08-12 14:05:41', '2025-08-12 14:05:50', '2025-08-12 14:05:50'),
+(21, 6, '2025-08', 40000.00, 5000.00, 6000.00, 2000.00, 2800.00, 3600.00, 51000.00, 42600.00, '2025-08-18 07:57:43', '2025-08-18 08:09:28', '2025-08-18 08:09:28'),
+(22, 6, '2025-08', 40000.00, 5000.00, 6000.00, 2000.00, 2800.00, 3600.00, 51000.00, 42600.00, '2025-08-18 08:09:43', '2025-08-18 08:13:24', '2025-08-18 08:13:24'),
+(23, 7, '2025-08', 3000.00, 5000.00, 4000.00, 180.00, 240.00, 300.00, 12000.00, 11280.00, '2025-08-18 08:09:43', '2025-08-18 08:30:06', '2025-08-18 08:30:06'),
+(24, 8, '2025-08', 20000.00, 5000.00, 40000.00, 1000.00, 800.00, 1200.00, 65000.00, 62000.00, '2025-08-18 08:09:43', '2025-08-18 08:30:06', '2025-08-18 08:30:06'),
+(25, 6, '2025-09', 40000.00, 5000.00, 6000.00, 2000.00, 2800.00, 3600.00, 51000.00, 42600.00, '2025-08-18 08:13:01', '2025-08-18 08:30:06', '2025-08-18 08:30:06'),
+(26, 7, '2025-09', 3000.00, 5000.00, 4000.00, 180.00, 240.00, 300.00, 12000.00, 11280.00, '2025-08-18 08:13:01', '2025-08-18 08:30:06', '2025-08-18 08:30:06'),
+(27, 8, '2025-09', 20000.00, 5000.00, 40000.00, 1000.00, 800.00, 1200.00, 65000.00, 62000.00, '2025-08-18 08:13:01', '2025-08-18 08:30:06', '2025-08-18 08:30:06'),
+(28, 6, '2025-09', 40000.00, 5000.00, 6000.00, 2000.00, 2800.00, 3600.00, 51000.00, 42600.00, '2025-08-18 08:40:34', '2025-08-18 14:58:24', '2025-08-18 14:58:24'),
+(29, 7, '2025-09', 3000.00, 5000.00, 4000.00, 180.00, 240.00, 300.00, 12000.00, 11280.00, '2025-08-18 08:40:34', '2025-08-18 14:59:20', '2025-08-18 14:59:20'),
+(30, 8, '2025-09', 20000.00, 5000.00, 40000.00, 1000.00, 800.00, 1200.00, 65000.00, 62000.00, '2025-08-18 08:40:34', '2025-08-18 14:59:25', '2025-08-18 14:59:25'),
+(31, 6, 'Aug, 2025', 40000.00, 5000.00, 6000.00, 2000.00, 2800.00, 3600.00, 51000.00, 42600.00, '2025-08-18 14:56:47', '2025-08-25 15:58:59', NULL),
+(32, 7, 'Aug, 2025', 3000.00, 5000.00, 4000.00, 180.00, 240.00, 300.00, 12000.00, 11280.00, '2025-08-25 15:58:59', '2025-08-25 15:58:59', NULL),
+(33, 8, 'Aug, 2025', 20000.00, 5000.00, 40000.00, 1000.00, 800.00, 1200.00, 65000.00, 62000.00, '2025-08-25 15:58:59', '2025-08-25 15:59:13', '2025-08-25 15:59:13'),
+(34, 6, '2025-08', 40000.00, 5000.00, 6000.00, 2000.00, 2800.00, 3600.00, 51000.00, 42600.00, '2025-09-04 09:19:59', '2025-09-04 09:19:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -563,7 +617,18 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (41, 'create leave type', 'web', '2025-08-06 10:13:38', '2025-08-06 10:13:38'),
 (42, 'edit leave type', 'web', '2025-08-06 10:13:49', '2025-08-06 10:13:49'),
 (43, 'view leave type', 'web', '2025-08-06 10:13:59', '2025-08-06 10:13:59'),
-(44, 'delete leave type', 'web', '2025-08-06 10:14:12', '2025-08-06 10:14:12');
+(44, 'delete leave type', 'web', '2025-08-06 10:14:12', '2025-08-06 10:14:12'),
+(46, 'postman permission updated', 'web', '2025-08-16 15:23:14', '2025-08-16 16:00:13'),
+(54, 'edit company', 'web', '2025-08-18 14:25:14', '2025-08-18 14:25:14'),
+(55, 'view salary structure', 'web', '2025-08-18 14:30:43', '2025-08-18 14:30:43'),
+(56, 'create salary structure', 'web', '2025-08-18 14:30:51', '2025-08-18 14:30:51'),
+(57, 'generate payroll', 'web', '2025-08-18 14:35:27', '2025-08-18 14:35:27'),
+(58, 'generate all payrolls', 'web', '2025-08-18 14:35:35', '2025-08-18 14:35:35'),
+(59, 'delete all payrolls', 'web', '2025-08-18 14:35:46', '2025-08-18 14:35:46'),
+(60, 'delete payroll', 'web', '2025-08-18 14:35:55', '2025-08-18 14:35:55'),
+(61, 'view payroll', 'web', '2025-08-18 14:51:45', '2025-08-18 14:51:45'),
+(62, 'view all payrolls', 'web', '2025-08-18 14:51:54', '2025-08-18 14:51:54'),
+(63, 'view project budget', 'web', '2025-08-25 07:10:17', '2025-08-25 07:10:17');
 
 -- --------------------------------------------------------
 
@@ -595,7 +660,23 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (6, 'App\\Models\\User', 6, 'auth_token', '8edf741f4d17bc6052f5f6db771ff19d48447154617bc2935b2a0a5b2abeb0c0', '[\"*\"]', NULL, NULL, '2025-07-27 12:08:48', '2025-07-27 12:08:48'),
 (7, 'App\\Models\\User', 6, 'auth_token', '7e592279bd91844298296e4d43f94a924b6f069ccbbcd7b15af847e3e259ddfc', '[\"*\"]', NULL, NULL, '2025-07-27 13:24:34', '2025-07-27 13:24:34'),
 (8, 'App\\Models\\User', 6, 'auth_token', '7d9c333a17a32f2e2770b0ed63a525bb694cb27d346e836187464c669138424d', '[\"*\"]', NULL, NULL, '2025-07-27 13:27:16', '2025-07-27 13:27:16'),
-(9, 'App\\Models\\User', 6, 'auth_token', '9fb10c47d2bb55481c99eee4776203bc9594b60f71449cd68c5917c44ad72d8d', '[\"*\"]', '2025-07-27 13:59:27', NULL, '2025-07-27 13:56:10', '2025-07-27 13:59:27');
+(9, 'App\\Models\\User', 6, 'auth_token', '9fb10c47d2bb55481c99eee4776203bc9594b60f71449cd68c5917c44ad72d8d', '[\"*\"]', '2025-07-27 13:59:27', NULL, '2025-07-27 13:56:10', '2025-07-27 13:59:27'),
+(10, 'App\\Models\\User', 6, 'auth_token', '21dffc1aa187a642d7f78e01b9506ca14d0327ce61e4ee108b9b96893a2bb5f8', '[\"*\"]', NULL, NULL, '2025-08-12 06:08:51', '2025-08-12 06:08:51'),
+(12, 'App\\Models\\User', 6, 'auth_token', '2cb979955082b140d446dcf9ca180617ec42072eebea96d017bc8d1faea8720c', '[\"*\"]', NULL, NULL, '2025-08-13 10:58:02', '2025-08-13 10:58:02'),
+(13, 'App\\Models\\User', 16, 'auth_token', 'd5fa17910b17eed8551fa355fb4fe3c257d840c1a7c1770c53a86d34af1b0fb4', '[\"*\"]', '2025-08-14 07:49:34', NULL, '2025-08-14 07:46:46', '2025-08-14 07:49:34'),
+(14, 'App\\Models\\User', 6, 'auth_token', '8682a3941241e062fb150d6fe0538eef3552df1eb2fb2099d06bef24d9746e50', '[\"*\"]', '2025-09-02 13:32:28', NULL, '2025-08-16 14:43:29', '2025-09-02 13:32:28'),
+(15, 'App\\Models\\User', 6, 'auth_token', 'eff577b43b0a0058465a54485d2fef59c2d7a481a3772b44ea604bfbfb777170', '[\"*\"]', '2025-08-18 08:40:34', NULL, '2025-08-18 05:47:35', '2025-08-18 08:40:34'),
+(17, 'App\\Models\\User', 6, 'auth_token', 'a9f1185f5b0961289197ca6cfdc716303eb25d609ad0501025f12d908c34c07d', '[\"*\"]', '2025-09-02 13:14:35', NULL, '2025-09-02 13:10:31', '2025-09-02 13:14:35'),
+(18, 'App\\Models\\User', 6, 'auth_token', '4d8b6f3787c06c64f6e842275d3a11fad3d67c0bd370ac081fd3d52897bbc556', '[\"*\"]', '2025-09-02 13:36:01', NULL, '2025-09-02 13:28:41', '2025-09-02 13:36:01'),
+(19, 'App\\Models\\User', 6, 'auth_token', '83e0a30c4652b9ee68b7cb8609136b6842587ed2911d77aa6662ff3a0651fc48', '[\"*\"]', '2025-09-02 13:46:28', NULL, '2025-09-02 13:39:57', '2025-09-02 13:46:28'),
+(20, 'App\\Models\\User', 6, 'auth_token', '9d5668ce1d84561bff4a7f03012da58cadedc82082f9f59031f0d8c4518c955f', '[\"*\"]', '2025-09-02 13:53:45', NULL, '2025-09-02 13:51:17', '2025-09-02 13:53:45'),
+(21, 'App\\Models\\User', 6, 'auth_token', '2c8d4a67247e6c4777791cecd4783cc6397d82d5ba4d2884f901130beccd2f92', '[\"*\"]', '2025-09-04 04:26:56', NULL, '2025-09-04 04:26:48', '2025-09-04 04:26:56'),
+(22, 'App\\Models\\User', 6, 'auth_token', 'ce9825529ac478b18c1efef7ff9b44973bacb314a9dc507395a77d58aaba7c65', '[\"*\"]', '2025-09-04 04:43:49', NULL, '2025-09-04 04:41:40', '2025-09-04 04:43:49'),
+(23, 'App\\Models\\User', 6, 'auth_token', 'bdd2f84be1fe4721788b4a7b9aa1909877f4096fe4914aaf11edb9b0e71d2673', '[\"*\"]', '2025-09-04 06:55:21', NULL, '2025-09-04 06:54:28', '2025-09-04 06:55:21'),
+(24, 'App\\Models\\User', 6, 'auth_token', '18170b57d7fd0406fefb942d0c9cfadd240e760fc752b129d8f24e2f080a2b6c', '[\"*\"]', '2025-09-04 09:08:06', NULL, '2025-09-04 09:07:37', '2025-09-04 09:08:06'),
+(25, 'App\\Models\\User', 6, 'auth_token', '646fb71c825d571a3e7a2bffd850f9a2144a98c41010e312bef847c50535a558', '[\"*\"]', NULL, NULL, '2025-09-04 09:08:54', '2025-09-04 09:08:54'),
+(26, 'App\\Models\\User', 6, 'auth_token', 'c0e5e1a65b92d92fdc3322429129f37c089b3099e793b42af4db62002d52e246', '[\"*\"]', '2025-09-04 09:11:45', NULL, '2025-09-04 09:11:14', '2025-09-04 09:11:45'),
+(27, 'App\\Models\\User', 6, 'auth_token', '1f325580bd61757cdf66f10fd98726c3af4bfe8ca42482968831a7c0e268fde2', '[\"*\"]', '2025-09-04 09:20:39', NULL, '2025-09-04 09:19:52', '2025-09-04 09:20:39');
 
 -- --------------------------------------------------------
 
@@ -609,6 +690,7 @@ CREATE TABLE `projects` (
   `client_name` varchar(100) DEFAULT NULL,
   `budget` decimal(10,2) DEFAULT NULL,
   `deadline` date DEFAULT NULL,
+  `status` enum('To-Do','In Progress','On Hold','Done') DEFAULT NULL,
   `description` text DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -619,13 +701,16 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `title`, `client_name`, `budget`, `deadline`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(9, 'HRMS', 'Demerg', 45000.00, '2025-08-09', 'HRMS HUman Resource  Management System', '2025-07-30 11:06:18', '2025-07-30 11:07:57', NULL),
-(10, 'temp', 'temp', 323232.00, '2025-07-31', 'temptemptemptemptempsssdxghdfhgfdgh', '2025-07-30 19:18:55', '2025-08-02 12:58:34', NULL),
-(11, 'aaaaa', 'aaa', 454545.00, '2025-08-08', 'aaaaaaaaaaaa', '2025-07-30 19:20:08', '2025-07-30 19:37:26', '2025-07-30 19:37:26'),
-(12, 'shivam', 'shivam', 2121212.00, '2025-08-09', 'shivamshivamshivamshivamshivamshivamshivam', '2025-07-30 19:23:43', '2025-07-30 19:36:14', '2025-07-30 19:36:14'),
-(14, 'hsdgh', 'sdtfgsd', 34.00, '2025-09-06', 'fydyjy', '2025-08-02 12:59:01', '2025-08-02 12:59:07', '2025-08-02 12:59:07'),
-(15, 'test project', 'Demerg', 70000.00, '2025-09-06', 'Demo Projecta', '2025-08-04 22:02:20', '2025-08-04 22:04:45', NULL);
+INSERT INTO `projects` (`id`, `title`, `client_name`, `budget`, `deadline`, `status`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(9, 'HRMS', 'Demerg', 45000.00, '2025-09-04', 'Done', 'HRMS HUman Resource  Management System', '2025-07-30 11:06:18', '2025-09-03 11:29:05', NULL),
+(15, 'test project', 'Demerg', 70000.00, '2025-09-06', NULL, 'Demo Projecta', '2025-08-04 22:02:20', '2025-08-04 22:04:45', NULL),
+(16, 'HRMS Postman updated', 'Postman Corp', 60000.00, '2025-09-27', NULL, 'HRMS updated', '2025-08-18 11:24:24', '2025-08-19 22:30:55', NULL),
+(17, 'Postman', 'Postman', 50000.00, '2025-08-23', NULL, 'Upgrade HRMS system', '2025-08-18 11:28:34', '2025-08-19 22:30:58', NULL),
+(18, 'Chartjs', 'kishan', 20000.00, '2025-11-30', NULL, 'makes chard/graph view', '2025-08-20 11:32:17', '2025-08-20 11:36:40', NULL),
+(19, 'test', 'fv', 2122.00, '2025-08-28', NULL, 'fsdvsdfv', '2025-08-20 13:01:22', '2025-08-20 13:01:22', NULL),
+(20, 'TEst mail', 'demerg', 40000.00, '2025-10-09', 'To-Do', 'sadasdasdas', '2025-09-04 11:20:02', '2025-09-04 11:20:02', NULL),
+(21, 'ete', 'sdghdsgh', 5555555.00, '2025-10-03', 'In Progress', 'thsthdth', '2025-09-04 11:21:54', '2025-09-04 11:21:54', NULL),
+(22, 'ete', 'sdghdsgh', 5555555.00, '2025-10-03', 'In Progress', 'thsthdth', '2025-09-04 11:26:50', '2025-09-04 11:31:38', '2025-09-04 11:31:38');
 
 -- --------------------------------------------------------
 
@@ -646,9 +731,9 @@ CREATE TABLE `project_members` (
 --
 
 INSERT INTO `project_members` (`project_id`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(9, 6, '2025-09-02 22:03:58', '2025-09-02 22:03:58', NULL),
 (9, 7, '2025-08-04 22:10:42', '2025-08-04 22:10:42', NULL),
 (9, 8, '2025-08-04 22:10:42', '2025-08-04 22:10:42', NULL),
-(9, 10, '2025-08-04 22:10:52', '2025-08-04 22:10:52', NULL),
 (10, 6, '2025-07-30 19:18:55', '2025-07-30 19:18:55', NULL),
 (10, 7, '2025-07-30 19:37:34', '2025-07-30 19:37:34', NULL),
 (10, 8, '2025-07-30 19:37:34', '2025-07-30 19:37:34', NULL),
@@ -660,7 +745,24 @@ INSERT INTO `project_members` (`project_id`, `user_id`, `created_at`, `updated_a
 (12, 13, '2025-07-30 19:23:43', '2025-07-30 19:23:43', NULL),
 (13, 6, '2025-07-30 19:24:44', '2025-07-30 19:24:44', NULL),
 (14, 9, '2025-08-02 12:59:01', '2025-08-02 12:59:01', NULL),
-(15, 7, '2025-08-04 22:04:45', '2025-08-04 22:04:45', NULL);
+(15, 7, '2025-08-04 22:04:45', '2025-08-04 22:04:45', NULL),
+(16, 7, '2025-08-18 11:24:24', '2025-08-20 11:29:42', NULL),
+(17, 6, '2025-08-18 11:28:34', '2025-08-18 11:28:34', NULL),
+(17, 7, '2025-08-18 11:28:34', '2025-08-18 11:28:34', NULL),
+(18, 7, '2025-08-20 11:32:57', '2025-08-20 11:32:57', NULL),
+(19, 7, '2025-08-20 13:01:22', '2025-08-20 13:01:22', NULL),
+(20, 6, '2025-09-04 11:20:02', '2025-09-04 11:20:02', NULL),
+(20, 7, '2025-09-04 11:20:02', '2025-09-04 11:20:02', NULL),
+(20, 8, '2025-09-04 11:20:02', '2025-09-04 11:20:02', NULL),
+(20, 9, '2025-09-04 11:20:02', '2025-09-04 11:20:02', NULL),
+(21, 6, '2025-09-04 11:21:54', '2025-09-04 11:21:54', NULL),
+(21, 7, '2025-09-04 11:21:54', '2025-09-04 11:21:54', NULL),
+(21, 8, '2025-09-04 11:21:54', '2025-09-04 11:21:54', NULL),
+(21, 9, '2025-09-04 11:21:54', '2025-09-04 11:21:54', NULL),
+(22, 6, '2025-09-04 11:26:50', '2025-09-04 11:26:50', NULL),
+(22, 7, '2025-09-04 11:26:50', '2025-09-04 11:26:50', NULL),
+(22, 8, '2025-09-04 11:26:50', '2025-09-04 11:26:50', NULL),
+(22, 9, '2025-09-04 11:26:50', '2025-09-04 11:26:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -684,7 +786,11 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 (2, 'Manager', 'web', '2025-07-17 08:39:29', '2025-07-17 08:39:29'),
 (4, 'Admin', 'web', '2025-07-17 08:53:11', '2025-07-17 08:53:11'),
 (5, 'Human Resource', 'web', '2025-07-18 03:21:17', '2025-07-18 03:21:17'),
-(6, 'Employee', 'web', '2025-07-18 03:21:43', '2025-07-18 03:21:43');
+(6, 'Employee', 'web', '2025-07-18 03:21:43', '2025-07-18 03:21:43'),
+(11, 'Team Lead', 'web', '2025-08-12 09:34:13', '2025-08-13 05:24:58'),
+(12, 'Superadmin', 'web', '2025-08-13 05:05:30', '2025-08-13 05:13:49'),
+(14, 'Trainee', 'web', '2025-08-25 06:43:03', '2025-08-25 06:43:03'),
+(15, 'Intern', 'web', '2025-08-25 06:51:56', '2025-08-25 06:51:56');
 
 -- --------------------------------------------------------
 
@@ -719,6 +825,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (18, 4),
 (19, 4),
 (23, 4),
+(23, 5),
 (23, 6),
 (24, 4),
 (24, 6),
@@ -750,6 +857,36 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `salary_structures`
+--
+
+CREATE TABLE `salary_structures` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `basic` decimal(10,2) NOT NULL,
+  `hra` decimal(10,2) NOT NULL,
+  `allowances` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `tax` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `pf` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `esi` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `salary_structures`
+--
+
+INSERT INTO `salary_structures` (`id`, `user_id`, `basic`, `hra`, `allowances`, `tax`, `pf`, `esi`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(3, 6, 40000.00, 5000.00, 6000.00, 5.00, 7.00, 9.00, '2025-08-12 06:54:27', '2025-08-12 06:54:27', NULL),
+(4, 7, 3000.00, 5000.00, 4000.00, 6.00, 8.00, 10.00, '2025-08-12 06:54:52', '2025-08-12 06:54:52', NULL),
+(5, 8, 20000.00, 5000.00, 40000.00, 5.00, 4.00, 6.00, '2025-08-12 07:05:33', '2025-08-12 07:05:33', NULL),
+(6, 8, 35000.00, 5000.00, 2000.00, 15.00, 18.00, 5.00, '2025-08-18 07:39:00', '2025-08-18 07:41:10', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sessions`
 --
 
@@ -767,8 +904,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('0n4b9ChdQyqBujpLUHqDDk8SUELUuewylVJWzkpd', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoid096Q1BFWmJyS0lENFMyMFFkb0R2ZUtVRTVlY2U4d2tKMjRHOUNITiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sZWF2ZXMvbWFuYWdlIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njt9', 1754639854),
-('a0pAgFinO3Axg2LOwHgr2IkwUIeyPoUwjTScZ9gB', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTUlvcVdEa2k0cEc4QnZiS0tIRTFWdlg5TlI1b3Jrc3pPMHVFSENRYiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo2O30=', 1754656986);
+('BstKfZHlrUv11s7nR4UwwNqJVh2FTExkGB1SgvTw', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaDVUTkM1S0ZKbENJTUs5Qzg5OXE5SU5YQzFPSUkxN3AwSjNXQmJNZCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1756734523);
 
 -- --------------------------------------------------------
 
@@ -802,6 +938,7 @@ CREATE TABLE `tasks` (
   `priority` enum('Low','Medium','High','Urgent') DEFAULT NULL,
   `status` enum('To-Do','In Progress','On Hold','Done') DEFAULT NULL,
   `due_date` date DEFAULT NULL,
+  `hours_assigned` decimal(5,2) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` datetime DEFAULT NULL
@@ -811,14 +948,19 @@ CREATE TABLE `tasks` (
 -- Dumping data for table `tasks`
 --
 
-INSERT INTO `tasks` (`id`, `project_id`, `title`, `description`, `priority`, `status`, `due_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(13, 9, 'User Authentication', 'User login/loguyt,update profile,view details,deletee profile', 'Low', 'Done', '2025-07-31', '2025-07-30 12:53:09', '2025-07-31 19:40:21', NULL),
-(14, 9, 'Dashbord Page', 'Create view for Admin,HR,Manager,Employee to redirecet to theri respective pages when logedinn.', 'High', 'To-Do', '2025-08-06', '2025-07-30 12:57:15', '2025-07-30 12:57:15', NULL),
-(16, 9, 'dfdf', 'sdfsdfs', 'Low', 'On Hold', '2025-08-07', '2025-07-30 13:11:05', '2025-07-30 14:18:45', '2025-07-30 14:18:45'),
-(17, 9, 'Roles and Permission', 'Roles and Permission system in hRMS for Admin,manager,hr and employee', 'Urgent', 'In Progress', '2025-08-08', '2025-07-30 14:20:01', '2025-08-02 12:59:52', NULL),
-(18, 9, 'E', 'E', 'Low', 'To-Do', '2025-07-31', '2025-07-30 14:51:18', '2025-07-30 14:51:24', '2025-07-30 14:51:24'),
-(19, 9, '35y', '6', 'Low', 'To-Do', '2025-07-31', '2025-07-30 15:09:26', '2025-07-30 15:09:32', '2025-07-30 15:09:32'),
-(20, 9, 'dsfdtghegd', 'gerg', 'Low', 'In Progress', '2025-08-08', '2025-08-02 12:59:27', '2025-08-02 12:59:41', '2025-08-02 12:59:41');
+INSERT INTO `tasks` (`id`, `project_id`, `title`, `description`, `priority`, `status`, `due_date`, `hours_assigned`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(13, 9, 'User Authentication', 'User login/loguyt,update profile,view details,deletee profile', 'Low', 'Done', '2025-09-03', 8.18, '2025-07-30 12:53:09', '2025-09-04 16:01:49', NULL),
+(14, 9, 'Dashbord Page', 'Create view for Admin,HR,Manager,Employee to redirecet to theri respective pages when logedinn.', 'High', 'Done', '2025-08-06', 3.50, '2025-07-30 12:57:15', '2025-09-04 16:06:58', NULL),
+(17, 9, 'Roles and Permission', 'Roles and Permission system in hRMS for Admin,manager,hr and employee', 'Urgent', 'In Progress', '2025-08-17', 12.00, '2025-07-30 14:20:01', '2025-08-20 13:24:53', NULL),
+(22, 16, 'Create login ui upgrate', 'Frontend api', 'Medium', 'In Progress', '2025-08-22', 2.50, '2025-08-18 11:38:32', '2025-08-20 13:25:02', NULL),
+(23, 16, 'Create login ui', 'Frontend login page', 'High', 'To-Do', '2025-08-26', 7.00, '2025-08-18 11:41:18', '2025-08-20 13:25:12', NULL),
+(25, 9, 'testing hours assigned', 'testing hours assigned', 'High', 'To-Do', '2025-08-22', 25.00, '2025-08-20 21:18:33', '2025-08-20 21:18:33', NULL),
+(26, 21, 'wewfasf', 'asdvasdvasd', 'Medium', 'To-Do', '2025-09-17', 5.50, '2025-09-04 11:32:11', '2025-09-04 11:38:22', '2025-09-04 11:38:22'),
+(27, 21, 'wewfasf', 'asdvasdvasd', 'Medium', 'To-Do', '2025-09-17', 5.50, '2025-09-04 11:33:50', '2025-09-04 11:38:25', '2025-09-04 11:38:25'),
+(28, 21, 'wewfasf', 'asdvasdvasd', 'Medium', 'To-Do', '2025-09-17', 5.50, '2025-09-04 11:34:13', '2025-09-04 11:38:19', '2025-09-04 11:38:19'),
+(29, 21, 'tyik', 'tuyj', 'Medium', 'To-Do', '2025-09-19', 2.50, '2025-09-04 11:35:49', '2025-09-04 11:38:16', '2025-09-04 11:38:16'),
+(30, 21, 'tyik', 'tuyj', 'Medium', 'To-Do', '2025-09-19', 2.50, '2025-09-04 11:37:10', '2025-09-04 11:38:11', '2025-09-04 11:38:11'),
+(31, 21, 'sadasdasda', 'sdasdasdasdasdasd', 'Medium', 'To-Do', '2025-10-07', 3.00, '2025-09-04 11:38:47', '2025-09-04 11:38:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -848,7 +990,9 @@ INSERT INTO `task_comments` (`id`, `task_id`, `user_id`, `comment`, `created_at`
 (6, 13, 6, 'ok ill check...', '2025-07-31 19:39:57', '2025-07-31 19:39:57', NULL),
 (7, 13, 6, 'Start with dashboard page designing each seperate for Admin,HR,Manager and employee.', '2025-08-01 13:57:37', '2025-08-01 13:57:37', NULL),
 (8, 13, 7, 'ok  sir ill start', '2025-08-01 13:58:15', '2025-08-01 13:58:15', NULL),
-(9, 13, 6, 'qwqwqwqw', '2025-08-02 13:01:08', '2025-08-02 13:01:08', NULL);
+(9, 13, 6, 'qwqwqwqw', '2025-08-02 13:01:08', '2025-08-02 13:01:08', NULL),
+(10, 22, 6, 'We need to complete this by todayy.', '2025-08-18 11:46:15', '2025-08-18 11:46:15', NULL),
+(11, 13, 7, 'hmm', '2025-08-25 12:09:17', '2025-08-25 12:09:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -863,6 +1007,30 @@ CREATE TABLE `task_members` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `task_members`
+--
+
+INSERT INTO `task_members` (`id`, `task_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(13, 13, 7, NULL, NULL),
+(14, 14, 7, NULL, NULL),
+(17, 17, 7, NULL, NULL),
+(22, 22, 7, NULL, NULL),
+(23, 23, 7, NULL, NULL),
+(24, 24, 7, NULL, NULL),
+(25, 24, 8, NULL, NULL),
+(26, 25, 7, NULL, NULL),
+(28, 13, 8, NULL, NULL),
+(29, 14, 8, NULL, NULL),
+(30, 17, 8, NULL, NULL),
+(31, 25, 8, NULL, NULL),
+(32, 13, 6, NULL, NULL),
+(53, 31, 6, NULL, NULL),
+(54, 31, 7, NULL, NULL),
+(55, 31, 8, NULL, NULL),
+(56, 31, 9, NULL, NULL),
+(57, 14, 6, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -889,16 +1057,25 @@ CREATE TABLE `timesheets` (
 --
 
 INSERT INTO `timesheets` (`id`, `user_id`, `task_id`, `project_id`, `date`, `hours_worked`, `description`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 6, 13, 9, '2025-07-30', 3.00, 'Finding....', 'Rejected', '2025-07-30 18:41:51', '2025-08-08 16:24:21', NULL),
-(2, 6, 13, 9, '2025-07-30', 2.00, 'fsdfdf', 'Rejected', '2025-07-30 18:45:47', '2025-08-08 16:24:26', NULL),
-(3, 6, 13, 9, '2025-07-31', 0.02, '22sdfsdf', 'Submitted', '2025-07-31 18:10:47', '2025-08-08 16:24:36', NULL),
+(1, 6, 13, 9, '2025-07-30', 3.00, 'Finding....', 'Rejected', '2025-07-30 18:41:51', '2025-09-02 21:53:07', NULL),
+(2, 6, 13, 9, '2025-07-30', 2.00, 'fsdfdf', 'Rejected', '2025-07-30 18:45:47', '2025-09-02 21:54:41', NULL),
+(3, 6, 13, 9, '2025-07-31', 0.02, '22sdfsdf', 'Approved', '2025-07-31 18:10:47', '2025-09-02 21:47:17', NULL),
 (4, 7, 13, 9, '2025-07-31', 2.02, 'sss', 'Submitted', '2025-07-31 18:24:10', '2025-08-08 16:24:39', NULL),
-(5, 7, 13, 9, '2025-07-31', 1.28, 'sss', 'Submitted', '2025-07-31 18:25:24', '2025-08-08 16:24:41', NULL),
+(5, 7, 13, 9, '2025-07-31', 1.28, 'sss', 'Rejected', '2025-07-31 18:25:24', '2025-08-09 18:20:34', NULL),
 (6, 7, 13, 9, '2025-07-31', 0.03, 'ss', 'Submitted', '2025-07-31 18:29:18', '2025-08-08 16:24:28', NULL),
 (7, 7, 13, 9, '2025-07-31', 1.03, 'ss', 'Submitted', '2025-07-31 19:03:06', '2025-08-08 16:24:44', NULL),
-(8, 7, 13, 9, '2025-07-31', 0.03, 's', 'Approved', '2025-07-31 19:03:42', '2025-08-08 16:24:46', NULL),
-(9, 7, 13, 9, '2025-07-31', 12.00, 'sdcsdfgrerrrrrrrrrrrrrsfg', 'Approved', '2025-07-31 19:04:39', '2025-08-08 16:24:48', NULL),
-(10, 6, 17, 9, '2025-08-04', 12.00, 'Done for today...', 'Rejected', '2025-08-04 22:06:30', '2025-08-08 16:24:51', NULL);
+(8, 7, 13, 9, '2025-07-31', 0.03, 's', 'Rejected', '2025-07-31 19:03:42', '2025-08-20 21:20:23', NULL),
+(9, 7, 13, 9, '2025-07-31', 12.00, 'sdcsdfgrerrrrrrrrrrrrrsfg', 'Rejected', '2025-07-31 19:04:39', '2025-08-20 21:20:25', NULL),
+(10, 6, 17, 9, '2025-08-04', 12.00, 'Done for today...', 'Rejected', '2025-08-04 22:06:30', '2025-08-08 16:24:51', NULL),
+(11, 6, 22, 16, '2025-08-18', 7.50, 'Worked on ui screens', 'Approved', '2025-08-18 11:52:38', '2025-08-18 12:32:49', NULL),
+(12, 6, 22, 16, '2025-08-18', 5.50, 'Worked on dashboard screens', 'Rejected', '2025-08-18 12:20:58', '2025-08-18 12:32:53', NULL),
+(14, 6, 22, 16, '2025-08-18', 5.50, 'Worked on dashboard screens testsss', 'Submitted', '2025-08-18 12:37:04', '2025-08-18 12:37:04', NULL),
+(15, 7, 17, NULL, '2025-08-25', 0.51, 'gg', 'Submitted', '2025-08-25 12:39:43', '2025-08-25 12:39:43', NULL),
+(16, 6, 13, NULL, '2025-09-02', 1.01, 'sdfghjadgjsadgjsdgjsgdfj', 'Submitted', '2025-09-02 21:19:56', '2025-09-02 21:19:56', NULL),
+(17, 6, 13, NULL, '2025-09-02', 0.01, 'xfyjdsfjy', 'Submitted', '2025-09-02 21:20:27', '2025-09-02 21:20:27', NULL),
+(18, 6, 13, NULL, '2025-09-02', 0.01, 'asfasdads', 'Submitted', '2025-09-02 21:28:08', '2025-09-02 21:28:08', NULL),
+(19, 6, 13, NULL, '2025-09-02', 0.01, 'ghgggggggggggggggggggggggggggggggggggggg', 'Submitted', '2025-09-02 21:32:43', '2025-09-02 21:32:43', NULL),
+(20, 6, 13, NULL, '2025-09-02', 0.01, 'ghgggggggggggggggggggggggggggggggggggggg', 'Rejected', '2025-09-02 21:33:57', '2025-09-02 21:57:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -910,13 +1087,23 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `gender` enum('male','female','others') DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `contact_number` bigint(13) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `pin_code` varchar(255) DEFAULT NULL,
+  `joining_date` date DEFAULT NULL,
+  `employment_type` enum('Full-Time','Part-Time','Intern','Trainee','Contract') DEFAULT NULL,
+  `status` enum('active','inactive','terminated') DEFAULT NULL,
+  `resume` varchar(255) DEFAULT NULL,
+  `aadhar_card` varchar(255) DEFAULT NULL,
+  `pan_card` varchar(255) DEFAULT NULL,
   `leave_balance` int(11) DEFAULT 12,
-  `google_id` varchar(255) DEFAULT NULL,
-  `google_token` varchar(255) DEFAULT NULL,
-  `google_refresh_token` varchar(255) DEFAULT NULL,
-  `google_avatar` text DEFAULT NULL,
+  `face_image` varchar(255) DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -927,14 +1114,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `leave_balance`, `google_id`, `google_token`, `google_refresh_token`, `google_avatar`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(6, 'Shivam Bandekar', 'shivambandekar44@gmail.com', NULL, '$2y$12$DF9IP9X0wcgKuw1ru6IleOgAnjdH4copZ//q5njgbmarjessYoFq2', 1, NULL, NULL, NULL, NULL, NULL, '2025-07-19 00:50:59', '2025-08-08 08:05:13', NULL),
-(7, 'Shubham Chodankar', 'employee01@example.com', NULL, '$2y$12$/RghM8b7qNTgra/BXnYquO7aiy2J9OtNnzOvqm4NFonRpg9SktD0O', 12, NULL, NULL, NULL, NULL, NULL, '2025-07-20 07:20:43', '2025-07-20 07:20:43', NULL),
-(8, 'Viren Viren', 'employee03@example.com', NULL, '$2y$12$U9XsQLYIx3u9mgs/ENoYReDPJWuEzVn4O4y.pIKgeowfmuuQPs3hG', 12, NULL, NULL, NULL, NULL, NULL, '2025-07-21 05:33:25', '2025-08-01 09:11:38', NULL),
-(9, 'Dwepam Gain', 'manager@example.com', NULL, '$2y$12$z61E7b5gyzxRbsbgIEjlR.GhcIOV6c.ofRZ1gIdr7lnLf/XVlRQFG', 12, NULL, NULL, NULL, NULL, NULL, '2025-07-21 05:34:03', '2025-07-21 05:34:03', NULL),
-(10, 'Shivam Bandekar', 'employee02@example.com', NULL, '$2y$12$ElO9XjycCuF8LCd3g39xiOq8y42Q4ic/jNN59tU7Dh3HeFTF0KqvC', 12, '103688976084377817309', 'ya29.A0AS3H6NwAhNbn7fxqHP6lyLfm2OFO3O3ENg6cXwvufC959LWj3E1jioe101DVvhjhAeY1m8eP5HAabNvnB3lgSWvEBtHWvEPrXfgL2WGsu9o2ezsS4ZKJIIVvd6uq79oIX-XryzPun9oyFXMDGyhTRKDK6X2M4iAQPSJvYtLql0yUhAXUTOOy7tGIJsxqQyHUhZ4xAv4laCgYKAS4SARUSFQHGX2MibzOf-CDnuRclyhbVrJ5-2w0207', NULL, 'https://lh3.googleusercontent.com/a/ACg8ocLSbFnq3HvKOw6HR3a96o58cTQpBq14QjKg_CtyYshr1dAAgAA=s96-c', NULL, '2025-07-25 00:43:38', '2025-07-26 07:28:10', NULL),
-(12, 'test updated', 'test@example.com', NULL, '$2y$12$JL.hBkbMdijwOWmC80/wA.aP5/jM/6PZzPsWO4x5pesfZdIirUNFe', 12, NULL, NULL, NULL, NULL, NULL, '2025-07-26 13:40:20', '2025-07-26 13:43:26', '2025-07-26 19:13:26'),
-(13, 'updateTest postmanapi', 'postman@example.com', NULL, '$2y$12$8eCgbTIeXcOuv4Wk.XsStu6AZaKrowcp2.qPP98/5d768kuICFhz.', 12, NULL, NULL, NULL, NULL, NULL, '2025-07-27 12:05:59', '2025-07-27 12:10:05', '2025-07-27 17:40:05');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `gender`, `date_of_birth`, `contact_number`, `address`, `city`, `state`, `country`, `pin_code`, `joining_date`, `employment_type`, `status`, `resume`, `aadhar_card`, `pan_card`, `leave_balance`, `face_image`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(6, 'Shivam Bandekar', 'shivambandekar44@gmail.com', '$2y$12$DF9IP9X0wcgKuw1ru6IleOgAnjdH4copZ//q5njgbmarjessYoFq2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2025-07-19 00:50:59', '2025-08-13 10:08:18', NULL),
+(7, 'Shubham Chodankar', 'employee01@example.com', '$2y$12$/RghM8b7qNTgra/BXnYquO7aiy2J9OtNnzOvqm4NFonRpg9SktD0O', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 12, NULL, NULL, '2025-07-20 07:20:43', '2025-07-20 07:20:43', NULL),
+(8, 'Viren Viren', 'employee03@example.com', '$2y$12$U9XsQLYIx3u9mgs/ENoYReDPJWuEzVn4O4y.pIKgeowfmuuQPs3hG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 12, NULL, NULL, '2025-07-21 05:33:25', '2025-08-01 09:11:38', NULL),
+(9, 'Dwepam Gain', 'manager@example.com', '$2y$12$z61E7b5gyzxRbsbgIEjlR.GhcIOV6c.ofRZ1gIdr7lnLf/XVlRQFG', 'male', '2025-07-27', 5245454545, 'sterrt', 'asdf', 'sdasd', 'asdf', '102120', '1222-12-12', 'Full-Time', 'active', 'uploads/resumes/8LjDGyqw5MRrFykZUKMGSNez4wcmXoBGQih8ju2k.pdf', 'uploads/aadhar/XzQ6oJbJFdgNB3qKOS07BKUR4SW9w8sebFue0l1s.pdf', 'uploads/pan/Bq1o8UWAiFNxhGmERyJuEWttxAGq1LJr5yb65whF.pdf', 12, NULL, NULL, '2025-07-21 05:34:03', '2025-08-31 10:43:13', NULL),
+(24, 'dg dgb', 'shivambandekadgsdgr44@gmail.com', '$2y$12$/pSBZhEHR9PtvXy100mrBuMYCv1Uv1bMuqIjzW4.n7lTN4SqdhF1W', 'male', '2025-03-30', 3242545245, 'asdfg', 'dsfgsdfg', 'sdfgdfg', 'sdfgsdfg', '452345', '2025-09-03', 'Full-Time', 'active', NULL, NULL, NULL, NULL, 'faces/face_1756976666.png', NULL, '2025-09-04 07:57:32', '2025-09-04 09:04:26', NULL);
 
 --
 -- Indexes for dumped tables
@@ -967,23 +1152,10 @@ ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
 
 --
--- Indexes for table `companies`
---
-ALTER TABLE `companies`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `company_profile`
 --
 ALTER TABLE `company_profile`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `employees`
---
-ALTER TABLE `employees`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `employees_user_id_unique` (`user_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -1052,13 +1224,20 @@ ALTER TABLE `model_has_roles`
 --
 ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `notifications_user_id_index` (`user_id`);
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
 -- Indexes for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `payrolls`
+--
+ALTER TABLE `payrolls`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `payrolls_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `permissions`
@@ -1102,6 +1281,13 @@ ALTER TABLE `roles`
 ALTER TABLE `role_has_permissions`
   ADD PRIMARY KEY (`permission_id`,`role_id`),
   ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
+
+--
+-- Indexes for table `salary_structures`
+--
+ALTER TABLE `salary_structures`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `salary_structures_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `sessions`
@@ -1163,31 +1349,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `breaks`
 --
 ALTER TABLE `breaks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
-
---
--- AUTO_INCREMENT for table `companies`
---
-ALTER TABLE `companies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `company_profile`
 --
 ALTER TABLE `company_profile`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `employees`
---
-ALTER TABLE `employees`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1199,25 +1373,25 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `holidays`
 --
 ALTER TABLE `holidays`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `leave_types`
 --
 ALTER TABLE `leave_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1226,34 +1400,40 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- AUTO_INCREMENT for table `notifications`
+-- AUTO_INCREMENT for table `payrolls`
 --
-ALTER TABLE `notifications`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `payrolls`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `salary_structures`
+--
+ALTER TABLE `salary_structures`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `session_logs`
@@ -1265,31 +1445,31 @@ ALTER TABLE `session_logs`
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `task_comments`
 --
 ALTER TABLE `task_comments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `task_members`
 --
 ALTER TABLE `task_members`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `timesheets`
 --
 ALTER TABLE `timesheets`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables
@@ -1308,12 +1488,6 @@ ALTER TABLE `breaks`
   ADD CONSTRAINT `breaks_attendance_id_foreign` FOREIGN KEY (`attendance_id`) REFERENCES `attendance` (`id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `employees`
---
-ALTER TABLE `employees`
-  ADD CONSTRAINT `fk_user_employee` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `model_has_permissions`
 --
 ALTER TABLE `model_has_permissions`
@@ -1326,11 +1500,23 @@ ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `payrolls`
+--
+ALTER TABLE `payrolls`
+  ADD CONSTRAINT `payrolls_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `role_has_permissions`
 --
 ALTER TABLE `role_has_permissions`
   ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `salary_structures`
+--
+ALTER TABLE `salary_structures`
+  ADD CONSTRAINT `salary_structures_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `timesheets`

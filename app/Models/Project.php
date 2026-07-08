@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
 
 class Project extends Model
 {
@@ -14,10 +15,13 @@ class Project extends Model
         'client_name',
         'budget',
         'deadline',
+        'status',
         'description'
     ];
 
-    protected $dates = ['deadline'];
+    protected $casts = [
+        'deadline' => 'date',
+    ];
 
     public function members()
     {
@@ -29,8 +33,7 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
     public function users()
-{
-    return $this->belongsToMany(User::class, 'project_members');
-}
-
+    {
+        return $this->members();
+    }
 }

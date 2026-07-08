@@ -3,14 +3,20 @@
         ? 'flex items-center gap-2 px-4 py-2 rounded bg-primary border-l-4 border-white hover:scale-105 hover:bg-hover transition-all duration-300 ease-in-out'
         : 'flex items-center gap-2 px-4 py-2 rounded hover:scale-105 hover:bg-hover transition-all duration-300 ease-in-out';
 
-    $role = Auth::user()->roles->pluck('name')->first();
-    $routeName = $role === 'Human Resource' ? 'hr.dashboard' : strtolower($role) . '.dashboard';
+    $role = Auth::check() ? Auth::user()->roles->pluck('name')->first() : null;
+
+    if ($role === true) {
+        return redirect()->route('default.dashboard');
+    }
+
 @endphp
+
 
 <!-- Font Awesome CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<aside class="bg-secondary-gradient fixed top-0 left-0 w-64 h-screen overflow-y-auto hide-scrollbar shadow-md z-30
+<aside id="app-sidebar"
+    class="bg-secondary-gradient fixed top-0 left-0 w-64 h-screen overflow-y-auto hide-scrollbar shadow-md z-30
            bg-gradient-to-br from-[var(--primary-bg)] to-[var(--primary-bg-light)] text-primary
            transition-transform duration-300 ease-in-out
            md:translate-x-0 transform"
@@ -36,10 +42,23 @@
 
         <!-- Dashboard -->
         <div class="border-b border-primary pb-2 mb-2">
-            <a href="{{ route($routeName) }}" class="{{ $isActive('*.dashboard') }}">
+            <a href="{{ route('default.dashboard') }}" class="{{ $isActive('default.dashboard') }}">
                 <i class="fas fa-home"></i> Dashboard
             </a>
+
         </div>
+
+        {{-- Company Management --}}
+        @can('edit company')
+            <div class="border-b border-primary pb-2 mb-2">
+                <div class="font-semibold uppercase tracking-wide text-xs mb-2 text-primary/70">
+                    <i class="fas fa-users"></i> Company Management
+                </div>
+                <a href="{{ route('company.edit', $company->id) }}" class="{{ $isActive('company.edit') }}">
+                    <i class="fas fa-user-tag"></i> Edit Company Details
+                </a>
+            </div>
+        @endcan
 
         <!-- User Management -->
         <div class="border-b border-primary pb-2 mb-2">
@@ -59,22 +78,29 @@
                     <i class="fas fa-key"></i> Permissions
                 </a>
             @endcan
+            @can('view user')
+                <a href="{{ route('users.index') }}" class="{{ $isActive('users.index') }}">
+                    <i class="fas fa-user-friends w-4 h-4 mr-3"></i> Users
+                </a>
+            @endcan
         </div>
 
         <!-- Attendance -->
         <div class="border-b border-primary pb-2 mb-2">
             <div class="font-semibold uppercase tracking-wide text-xs mb-2 text-primary/70">Attendance</div>
-           
+            <a href="{{ route('employee.dashboard') }}" class="{{ $isActive('employee.dashboard') }}"><i
+                    class="fas fa-user-clock"></i> Punch-In/Punch-Out
+            </a>
             @can('attendance report')
-                <a href="{{ route('admin.attendance.report') }}"
-                    class="{{ $isActive('admin.attendance.report') }}"><i class="fas fa-user-clock"></i> Attendance Reports
-                    </a>
+                <a href="{{ route('admin.attendance.report') }}" class="{{ $isActive('admin.attendance.report') }}"><i
+                        class="fas fa-user-clock"></i> Attendance Reports
+                </a>
             @endcan
 
-             <a href="{{ route('reports.report') }}" class="{{ $isActive('reports.report') }}">
+            <a href="{{ route('reports.report') }}" class="{{ $isActive('reports.report') }}">
                 <i class="fas fa-clipboard-list"></i> Summary Reports
             </a>
-            
+
         </div>
 
         <!-- Leave -->
@@ -94,12 +120,13 @@
             @endcan
             @can('approve leave')
                 <a href="{{ route('leaves.manage') }}" class="{{ $isActive('leaves.manage') }}">
-                    <i class="fas fa-tasks"></i> 
-                    Manage Leave
+                    <i class="fas fa-tasks"></i>
+                    Manage Leaves
                 </a>
             @endcan
             @can('view leave type')
-                <a href="{{ route('leave-types.index') }}" class="{{ $isActive('leave-types.index') }}"><i class="fas fa-calendar-check"></i> Add Leave</a>
+                <a href="{{ route('leave-types.index') }}" class="{{ $isActive('leave-types.index') }}"><i
+                        class="fas fa-calendar-check"></i> Manage Leave Type</a>
             @endcan
         </div>
 
@@ -108,7 +135,7 @@
             <div class="font-semibold uppercase tracking-wide text-xs mb-2 text-primary/70">
                 <i class="fas fa-calendar-day"></i> Holidays
             </div>
-            <a href="{{ route('holidays.index') }}" class="{{ $isActive('holidays.index')}}">
+            <a href="{{ route('holidays.index') }}" class="{{ $isActive('holidays.index') }}">
                 <i class="fas fa-calendar"></i> View Holidays
             </a>
         </div>
@@ -119,36 +146,144 @@
                 <div class="font-semibold uppercase tracking-wide text-xs mb-2 text-primary/70">
                     <i class="fas fa-project-diagram"></i> Projects
                 </div>
-                <a href="{{ route('projects.index') }}"
-                    class="{{ $isActive('projects.index') }}">
+                <a href="{{ route('projects.index') }}" class="{{ $isActive('projects.index') }}">
                     <i class="fas fa-folder-open"></i> View Projects
                 </a>
             </div>
         @endcan
 
-     
+
 
         <!-- Payroll -->
         <div class="border-b border-primary pb-2 mb-2">
             <div class="font-semibold uppercase tracking-wide text-xs mb-2 text-primary/70">
-                <i class="fas fa-money-bill-wave"></i> Payroll
+                <i class="fas fa-money-bill-wave"></i> Salary & Payroll
             </div>
-            <a href="#" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-hover hover:scale-105 transition-all duration-300">
-                <i class="fas fa-file-invoice-dollar"></i> Salary Slips
-            </a>
-            <a href="#" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-hover hover:scale-105 transition-all duration-300">
-                <i class="fas fa-cogs"></i> Process Payroll
+            @can('view salary structure')
+                <a href="{{ route('salary.index') }}" class="{{ $isActive('salary.index') }}">
+                    <i class="fas fa-dollar-sign"></i> Salary Structures
+                </a>
+            @endcan
+            <a href="{{ route('payrolls.index') }}" class="{{ $isActive('payrolls.index') }}">
+                <i class="fas fa-file-invoice-dollar"></i> Payrolls
             </a>
         </div>
-
-        <!-- Notifications -->
+        {{-- Install PWA --}}
         <div class="border-b border-primary pb-2 mb-2">
+            <div class="font-semibold uppercase tracking-wide text-xs mb-2 text-primary/70">
+               <i class="fa-brands fa-google-play"></i> Progressive Web App
+            </div>
+            <a href="javascript:void(0)" id="installPWA" class="{{ $isActive('pwa.install') }}">
+                <i class="fas fa-download mr-1"></i> Install HRMS App
+            </a>
+        </div>
+        <!-- Notifications -->
+        {{-- <div class="border-b border-primary pb-2 mb-2">
             <div class="font-semibold uppercase tracking-wide text-xs mb-2 text-primary/70">
                 <i class="fas fa-bell"></i> Notifications
             </div>
-            <a href="#" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-hover hover:scale-105 transition-all duration-300">
+            <a href="#"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-hover hover:scale-105 transition-all duration-300">
                 <i class="fas fa-bell"></i> Alerts
+            </a>
+        </div> --}}
+
+        <!-- AI Tools -->
+        <div class="border-b border-primary pb-2 mb-2">
+            <div class="font-semibold uppercase tracking-wide text-xs mb-2 text-primary/70">
+                <i class="fas fa-robot"></i> AI Tools
+            </div>
+            <a href="#"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-hover hover:scale-105 transition-all duration-300">
+                <i class="fas fa-brain"></i> SkillLens
+            </a>
+            <a href="#"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-hover hover:scale-105 transition-all duration-300">
+                <i class="fas fa-magic"></i> RootCauseX
             </a>
         </div>
     </nav>
 </aside>
+<script>
+    let deferredPrompt;
+    const installBtn = document.getElementById("installPWA");
+
+    // Listen for the "beforeinstallprompt" event
+    window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = "block"; // Show button
+    });
+
+    // Handle button click
+    installBtn.addEventListener("click", async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt(); // Show install prompt
+            const {
+                outcome
+            } = await deferredPrompt.userChoice;
+            console.log("User response:", outcome);
+            deferredPrompt = null;
+        }
+    });
+
+    // Optional: detect if already installed
+    window.addEventListener("appinstalled", () => {
+        console.log("PWA was installed");
+        installBtn.style.display = "none";
+    });
+</script>
+
+<script>
+    (() => {
+        const KEY = 'sidebar-scroll-top';
+
+        function getSidebar() {
+            return document.getElementById('app-sidebar');
+        }
+
+        function restoreScroll() {
+            const el = getSidebar();
+            if (!el) return;
+            const saved = sessionStorage.getItem(KEY);
+            if (saved !== null) {
+                const y = parseInt(saved, 10);
+                if (!Number.isNaN(y)) {
+                    // Defer to ensure layout/transitions are applied
+                    requestAnimationFrame(() => {
+                        el.scrollTop = y;
+                    });
+                }
+            }
+            // Save on scroll (passive for perf)
+            el.addEventListener('scroll', () => {
+                try {
+                    sessionStorage.setItem(KEY, String(el.scrollTop));
+                } catch (_) {}
+            }, {
+                passive: true
+            });
+
+            // Also save right before navigating away via sidebar links
+            const links = el.querySelectorAll('a[href]');
+            links.forEach((a) => {
+                a.addEventListener('click', () => {
+                    try {
+                        sessionStorage.setItem(KEY, String(el.scrollTop));
+                    } catch (_) {}
+                });
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', restoreScroll);
+
+        // Fallback: ensure we persist on page unload too
+        window.addEventListener('beforeunload', () => {
+            const el = getSidebar();
+            if (!el) return;
+            try {
+                sessionStorage.setItem(KEY, String(el.scrollTop));
+            } catch (_) {}
+        });
+    })();
+</script>

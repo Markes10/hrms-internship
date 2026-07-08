@@ -4,18 +4,18 @@
 
         <!-- About -->
         <div>
-            <h3 class="text-xl font-bold mb-3 text-primary">About {{ $company->name }}</h3>
-            <p class="text-sm text-secondary-text leading-relaxed">{{ $company->description }}</p>
+            <h3 class="text-xl font-bold mb-3 text-primary">About {{ $company->company_name }}</h3>
+            <p class="text-sm text-secondary-text leading-relaxed">{{ $company->company_description }}</p>
         </div>
 
         <!-- Quick Links -->
         <div>
             <h3 class="text-xl font-bold mb-3 text-primary">Quick Links</h3>
             <ul class="space-y-2 text-sm text-secondary-text">
-                <li><a href="#" class="hover:underline hover:text-primary transition-colors duration-200">Employee Directory</a></li>
-                <li><a href="#" class="hover:underline hover:text-primary transition-colors duration-200">Attendance Reports</a></li>
-                <li><a href="#" class="hover:underline hover:text-primary transition-colors duration-200">Payroll Management</a></li>
-                <li><a href="#" class="hover:underline hover:text-primary transition-colors duration-200">Project Tasks</a></li>
+                <li><a href="{{route('users.index')}}" class="hover:underline hover:text-primary transition-colors duration-200">User Directory</a></li>
+                <li><a href="{{ route('admin.attendance.report') }}" class="hover:underline hover:text-primary transition-colors duration-200">Attendance Reports</a></li>
+                <li><a href="{{route('payrolls.index')}}" class="hover:underline hover:text-primary transition-colors duration-200">Payroll Management</a></li>
+                <li><a href="{{route('projects.index')}}" class="hover:underline hover:text-primary transition-colors duration-200">Project Tasks</a></li>
             </ul>
         </div>
 

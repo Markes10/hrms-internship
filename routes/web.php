@@ -5,15 +5,17 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LeaveTypesController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\SalaryStructureController;
 use App\Http\Controllers\TaskCommentController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TimesheetController;
 use App\Http\Controllers\WorklogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PermissionConrtoller;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -53,26 +55,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
     Route::delete('/roles', [RoleController::class, 'destroy'])->name('roles.destroy');
 
-    //Employee Route
-    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
-    Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
-    Route::post('/employees', [EmployeeController::class, 'store'])->name('employees.store');
-    Route::get('/employees/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
-    Route::put('/employees/{id}', [EmployeeController::class, 'update'])->name('employees.update');
-    Route::delete('/employees', [EmployeeController::class, 'destroy'])->name('employees.destroy');
-
     //Users Route
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    // Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
-    // Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::post('/users/{id}', [UserController::class, 'update'])->name('users.update');
-    // Route::delete('/roles', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::delete('/users', [UserController::class, 'destroy'])->name('users.destroy');
 
     //Redirection of Admin, HR, Manager and Employee
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/default/dashboard', [AdminDashboardController::class, 'index'])->name('default.dashboard');
     Route::view('/hr/dashboard', 'hr_dashboard')->name('hr.dashboard');
     Route::view('/manager/dashboard', 'manager_dashboard')->name('manager.dashboard');
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
 
     //Punchin/Punchout & Breaks routes
     Route::view('/employee/dashboard', 'employee_dashboard')->name('employee.dashboard');
@@ -96,7 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('leave-types', LeaveTypesController::class);
 
     //Attendance Report
-    Route::get('/admin/attendance-report', [AdminDashboardController::class, 'showAttendanceReport'])->name('admin.attendance.report');
+    Route::get('/admin/attendance_report', [AdminDashboardController::class, 'showAttendanceReport'])->name('admin.attendance.report');
 
     //Holidays Routes WEB
     Route::get('/holidays', [HolidayController::class, 'index'])->name('holidays.index');
@@ -132,14 +127,50 @@ Route::middleware('auth')->group(function () {
     // Export Timesheet Report
     Route::get('/projects/{project}/tasks/{task}/timesheet-report', [TimesheetController::class, 'reportForm'])->name('timesheets.report.form');
     Route::post('/projects/{project}/tasks/{task}/timesheet-report/download', [TimesheetController::class, 'downloadReport'])->name('timesheets.report.download');
-Route::get('/timesheet/export/csv/{project}/{task}', [TimesheetController::class, 'downloadCsvReport']);
-
+    Route::get('/timesheet/export/csv/{project}/{task}', [TimesheetController::class, 'downloadCsvReport']);
     Route::get('/reports', [AdminDashboardController::class, 'attendanceChart'])->name('reports.report');
 
+    Route::get('/admin/attendance-report', [AdminDashboardController::class, 'reportForm'])->name('admin.report.form');
+    Route::post('/admin/attendance-report/download', [AdminDashboardController::class, 'downloadReport'])->name('attendance.report.download');
+    Route::get('/admin/attendance/export/csv/', [AdminDashboardController::class, 'downloadCsvReport']);
+
+    // Salary Structures
+    Route::resource('salary', SalaryStructureController::class);
+
+    // Payroll
+    Route::get('/payrolls', [PayrollController::class, 'index'])->name('payrolls.index');
+    Route::get('/payrolls/generate/{user_id}/{month}', [PayrollController::class, 'generate'])->name('payrolls.generate');
+    Route::get('/payrolls/{payroll}/slip', [PayrollController::class, 'payslip'])->name('payrolls.slip');
+    Route::get('/payrolls/generate-all/{month}', [PayrollController::class, 'generateAll'])->name('payrolls.generateAll');
+    Route::delete('/payrolls/{payroll}', [PayrollController::class, 'destroy'])->name('payrolls.destroy');
+    Route::delete('/payrolls', [PayrollController::class, 'destroyAll'])->name('payrolls.destroyAll');
+
+    //Company Routes
+    Route::get('company/{id}/edit', [CompanyController::class, 'edit'])->name('company.edit');
+    Route::put('company/{id}', [CompanyController::class, 'update'])->name('company.update');
+    Route::get('/attendance-calendar/{user}', [AttendanceController::class, 'attendance'])
+        ->name('attendance.calendar');
+    Route::get('/attendance-calendar', [AttendanceController::class, 'attendance'])
+        ->middleware('auth'); 
+    Route::get('/holidays-month', [AttendanceController::class, 'monthlyHolidays']);
+    Route::get('/leaves-week', [AttendanceController::class, 'weeklyLeaves']);
+    Route::get('/projects-six-months', [AttendanceController::class, 'projectsSixMonths']);
+    Route::get('/tasks-month', [AttendanceController::class, 'tasksMonth'])->name('tasks.month');
+
+    Route::get('/files/{type}/{filename}', [UserController::class, 'viewFile'])
+    ->where('type', 'resumes|aadhar|pan')
+    ->name('files.view');
+
+    Route::get('/files/leave/{filename}', [LeaveController::class, 'viewLeave'])
+    ->name('files.leave.view');
+
+    Route::get('/test-mail', function () {
+    $sent = Mail::raw('Test email from HRMS system', function ($m) {
+        $m->to('964645001@smtp-brevo.com')->subject('Test Email Brevo');
+    });
+
+    return $sent ? '✅ Email sent!' : '❌ Email failed!';
+});
 });
 
 require __DIR__ . '/auth.php';
-
-// routes/web.php
-Route::get('/admin/company', [CompanyController::class, 'edit'])->name('company.edit');
-Route::put('/admin/company', [CompanyController::class, 'update'])->name('company.update');

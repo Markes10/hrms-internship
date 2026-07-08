@@ -175,6 +175,7 @@
                 opacity: 0;
                 transform: translateY(15px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -186,25 +187,43 @@
                 padding-top: 1rem;
                 margin-top: 0.25rem;
             }
-            
+
             .analog-clock {
                 width: 60px;
                 height: 60px;
             }
-            
-            .hour-hand { height: 15px; top: 30%; }
-            .minute-hand { height: 18px; top: 25%; }
-            .second-hand { height: 22px; top: 22%; }
-            .clock-number { font-size: 8px; }
+
+            .hour-hand {
+                height: 15px;
+                top: 30%;
+            }
+
+            .minute-hand {
+                height: 18px;
+                top: 25%;
+            }
+
+            .second-hand {
+                height: 22px;
+                top: 22%;
+            }
+
+            .clock-number {
+                font-size: 8px;
+            }
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/cal-heatmap.css') }}">
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <div class="theme-app main-dashboard-container py-3 sm:py-4 lg:py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 gap-3 sm:gap-4">
+    <div class="w-full px-2 sm:px-6 lg:px-12 grid grid-cols-1 gap-3 sm:gap-4">
 
             <div class="bg-secondary-gradient text-primary p-3 sm:p-4 lg:p-5 rounded-lg shadow-lg animate-fade-in">
                 <div class="text-center mb-3 sm:mb-4">
-                    <h1 class="text-lg sm:text-xl lg:text-2xl font-bold mb-1 text-primary">Welcome, {{ Auth::user()->name }}!</h1>
+                    <h1 class="text-lg sm:text-xl lg:text-2xl font-bold mb-1 text-primary">Welcome,
+                        {{ Auth::user()->name }}!</h1>
                     <p class="text-sm sm:text-base text-secondary">Track your work hours professionally</p>
                 </div>
 
@@ -215,7 +234,7 @@
                             <div class="clock-number" style="top: 50%; right: 6px;">3</div>
                             <div class="clock-number" style="bottom: 6px; left: 50%;">6</div>
                             <div class="clock-number" style="top: 50%; left: 6px;">9</div>
-                            
+
                             <div class="clock-hand hour-hand" id="hour-hand"></div>
                             <div class="clock-hand minute-hand" id="minute-hand"></div>
                             <div class="clock-hand second-hand" id="second-hand"></div>
@@ -225,14 +244,17 @@
                     </div>
 
                     <div class="text-center">
-                        <div id="digital-time" class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 text-primary">00:00:00</div>
+                        <div id="digital-time" class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 text-primary">
+                            00:00:00</div>
                         <div id="digital-date" class="text-xs sm:text-sm text-secondary">Loading...</div>
                         <div id="digital-ampm" class="text-xs text-secondary">AM</div>
                         <p class="text-xs text-secondary mt-1">Digital</p>
                     </div>
 
+
                     <div class="text-center">
-                        <div class="bg-white bg-opacity-20 rounded-md p-2 sm:p-3 backdrop-filter backdrop-blur-sm border border-primary">
+                        <div
+                            class="bg-white bg-opacity-20 rounded-md p-2 sm:p-3 backdrop-filter backdrop-blur-sm border border-primary">
                             <div class="text-xs text-secondary mb-1">Time Zone</div>
                             <div id="timezone" class="font-semibold text-xs sm:text-sm text-primary">Loading...</div>
                             <div id="utc-offset" class="text-xs text-secondary mt-1">UTC+0</div>
@@ -244,22 +266,28 @@
             <div class="corporate-card rounded-lg shadow-lg p-3 sm:p-4 animate-fade-in animate-delay-100">
                 <div class="theme-app bg-primary-light p-2 sm:p-3 rounded-t-lg mb-3">
                     <h2 class="text-base sm:text-lg font-semibold text-primary flex items-center gap-2">
-                        <span class="text-lg">⏰</span> Work Status
+                        <i class="fas fa-user-clock text-primary mr-1"></i> Work Status
                     </h2>
                 </div>
-                
+
                 @if (session('success'))
-                    <div class="p-3 mb-3 text-sm text-green-800 rounded-lg bg-green-50 border border-green-200 flex items-center gap-2">
+                    <div
+                        class="p-3 mb-3 text-sm text-green-800 rounded-lg bg-green-50 border border-green-200 flex items-center gap-2">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd" />
                         </svg>
                         Success! {{ session('success') }}
                     </div>
                 @endif
                 @if (session('error'))
-                    <div class="p-3 mb-3 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 flex items-center gap-2">
+                    <div
+                        class="p-3 mb-3 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 flex items-center gap-2">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd" />
                         </svg>
                         Error! {{ session('error') }}
                     </div>
@@ -282,64 +310,157 @@
                         <div>
                             <div class="text-sm font-medium text-secondary mb-1">Extra Working Time</div>
                             @if ($attendanceToday && $attendanceToday->punch_out_again)
-                                <div class="text-2xl sm:text-3xl font-bold text-primary">{{ $attendanceToday->overtime_working_hours ?? '00:00:00' }}</div>
+                                <div class="text-2xl sm:text-3xl font-bold text-primary">
+                                    {{ $attendanceToday->overtime_working_hours ?? '00:00:00' }}</div>
                             @else
-                                <div id="extraWorkTime" class="text-2xl sm:text-3xl font-bold text-primary">00:00:00</div>
+                                <div id="extraWorkTime" class="text-2xl sm:text-3xl font-bold text-primary">00:00:00
+                                </div>
                             @endif
                         </div>
                     </div>
                 </div>
 
                 @if (!$attendanceToday)
-                    <form method="POST" action="{{ route('attendance.punchIn') }}" class="flex flex-col sm:flex-row gap-3 items-end">
+                    <form method="POST" id="punchInForm" action="{{ route('attendance.punchIn') }}" class="space-y-4">
                         @csrf
-                        <button type="submit" class="punch-button px-5 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg flex-shrink-0">
-                            🚀 Punch In
-                        </button>
-                        <div class="flex-1">
-                            <label for="punch_in_remarks" class="block text-sm font-medium text-gray-700 mb-1">Remarks (optional)</label>
-                            <input type="text" name="punch_in_remarks" id="punch_in_remarks" 
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                                placeholder="Late due to traffic...">
+
+                        <!-- Enhanced remarks and location selection GUI -->
+                        <div class="bg-gray-50 p-4 rounded-lg border space-y-4">
+                            <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                <i class="fas fa-sign-in-alt text-blue-500 mr-1"></i> Punch In Details
+                            </h3>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Remarks Section -->
+                                <div class="space-y-2">
+                                    <label for="punch_in_remarks"
+                                        class="flex text-sm font-medium text-gray-700 items-center gap-2">
+                                        <i class="fas fa-comment-dots text-orange-500 mr-1"></i> Remarks (Optional)
+                                    </label>
+                                    <textarea name="punch_in_remarks" id="punch_in_remarks" rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-none"
+                                        placeholder="Enter any remarks (e.g., Late due to traffic, Working from home today...)"></textarea>
+                                </div>
+
+                                <!-- Location Selection -->
+                                <div class="space-y-2">
+                                    <label for="location_type"
+                                        class="flex text-sm font-medium text-gray-700 items-center gap-2">
+                                        <i class="fas fa-map-marker-alt text-green-500 mr-1"></i> Work Location <span
+                                            class="text-red-500">*</span>
+                                    </label>
+                                    <select name="location_type" id="location_type" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        <option value="">🏢 Select Your Location</option>
+                                        <option value="Home">🏠 Home</option>
+                                        <option value="Company">🏢 Company Office</option>
+                                    </select>
+
+                                    <!-- GPS Status Indicator -->
+                                    <div class="flex items-center gap-2 text-xs text-gray-500">
+                                        <i class="fas fa-globe text-blue-500 mr-1"></i>
+                                        <span id="gps-status">GPS location will be captured automatically</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="flex justify-center">
+                            <button type="button" id="punchInBtn"
+                                class="punch-button px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-all duration-300">
+                                 Punch In
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="latitude" id="latitude">
+                        <input type="hidden" name="longitude" id="longitude">
                     </form>
                 @elseif (!$attendanceToday->punch_out)
-                    <form method="POST" action="{{ route('attendance.punchOut') }}" class="flex flex-col sm:flex-row gap-3 items-end">
+                    <form method="POST" action="{{ route('attendance.punchOut') }}" class="space-y-4">
                         @csrf
-                        <button type="submit" class="punch-button px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg flex-shrink-0">
-                            🏁 Punch Out
-                        </button>
-                        <div class="flex-1">
-                            <label for="punch_out_remarks" class="block text-sm font-medium text-gray-700 mb-1">Remarks (optional)</label>
-                            <input type="text" name="punch_out_remarks" id="punch_out_remarks" 
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                                placeholder="Leaving early for appointment...">
+
+                        <!-- Enhanced punch out remarks GUI -->
+                        <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
+                            <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                <i class="fas fa-sign-out-alt text-red-500 mr-1"></i> Punch Out Details
+                            </h3>
+
+                            <div class="space-y-2">
+                                <label for="punch_out_remarks"
+                                    class="flex text-sm font-medium text-gray-700 items-center gap-2">
+                                    <i class="fas fa-comment-dots text-orange-500 mr-1"></i> Remarks (Optional)
+                                </label>
+                                <textarea name="punch_out_remarks" id="punch_out_remarks" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-none"
+                                    placeholder="Enter any remarks (e.g., Leaving early for appointment, Completed all tasks...)"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button type="submit"
+                                class="punch-button px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-all duration-300">
+                                <i class="fas fa-sign-out-alt text-red-600 mr-1"></i> Punch Out
+                            </button>
                         </div>
                     </form>
                 @elseif ($attendanceToday->punch_in_again && !$attendanceToday->punch_out_again)
-                    <form method="POST" action="{{ route('attendance.punchOutAgain') }}" class="flex flex-col sm:flex-row gap-3 items-end" id="punchOutAgainForm">
+                    <form method="POST" action="{{ route('attendance.punchOutAgain') }}" class="space-y-4"
+                        id="punchOutAgainForm">
                         @csrf
-                        <button type="submit" class="punch-button px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg flex-shrink-0" id="btnPunchOutAgain">
-                            🏁 Punch Out Again
-                        </button>
-                        <div class="flex-1">
-                            <label for="punch_out_again_remarks" class="block text-sm font-medium text-gray-700 mb-1">Remarks (optional)</label>
-                            <input type="text" name="punch_out_again_remarks" id="punch_out_again_remarks"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm" 
-                                placeholder="Finished extra work...">
+
+                        <!-- Enhanced punch out again remarks GUI -->
+                        <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
+                            <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                <i class="fas fa-hourglass-end text-red-500 mr-1"></i> End Extra Work Details
+                            </h3>
+
+                            <div class="space-y-2">
+                                <label for="punch_out_again_remarks"
+                                    class="flex text-sm font-medium text-gray-700 items-center gap-2">
+                                    <i class="fas fa-comment-dots text-orange-500 mr-1"></i> Remarks (Optional)
+                                </label>
+                                <textarea name="punch_out_again_remarks" id="punch_out_again_remarks" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-none"
+                                    placeholder="Enter any remarks (e.g., Finished extra work, Completed urgent task...)"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button type="submit"
+                                class="punch-button px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-all duration-300"
+                                id="btnPunchOutAgain">
+                                <i class="fas fa-sign-out-alt text-red-600 mr-1"></i> Punch Out Again
+                            </button>
                         </div>
                     </form>
                 @else
-                    <form method="POST" action="{{ route('attendance.punchInAgain') }}" class="flex flex-col sm:flex-row gap-3 items-end" id="punchInAgainForm">
+                    <form method="POST" action="{{ route('attendance.punchInAgain') }}" class="space-y-4"
+                        id="punchInAgainForm">
                         @csrf
-                        <button type="submit" class="punch-button px-5 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg flex-shrink-0" id="btnPunchInAgain">
-                            🚀 Punch In Again
-                        </button>
-                        <div class="flex-1">
-                            <label for="punch_in_again_remarks" class="block text-sm font-medium text-gray-700 mb-1">Remarks (optional)</label>
-                            <input type="text" name="punch_in_again_remarks" id="punch_in_again_remarks"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm" 
-                                placeholder="Some extra work...">
+
+                        <!-- Enhanced punch in again remarks GUI -->
+                        <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
+                            <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                <i class="fas fa-hourglass-start text-green-500 mr-1"></i> Extra Work Details
+                            </h3>
+
+                            <div class="space-y-2">
+                                <label for="punch_in_again_remarks"
+                                    class="flex text-sm font-medium text-gray-700 items-center gap-2">
+                                    <i class="fas fa-comment-dots text-orange-500 mr-1"></i> Remarks (Optional)
+                                </label>
+                                <textarea name="punch_in_again_remarks" id="punch_in_again_remarks" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-none"
+                                    placeholder="Enter any remarks (e.g., Some extra work, Urgent project completion...)"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button type="submit"
+                                class="punch-button px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-all duration-300"
+                                id="btnPunchInAgain">
+                                <i class="fas fa-sign-in-alt text-green-600 mr-1"></i> Punch In Again
+                            </button>
                         </div>
                     </form>
                 @endif
@@ -349,7 +470,7 @@
                 <div class="corporate-card rounded-lg shadow-lg p-3 sm:p-4 animate-fade-in animate-delay-200">
                     <div class="theme-app bg-primary-light p-2 sm:p-3 rounded-t-lg mb-3">
                         <h2 class="text-base sm:text-lg font-semibold text-primary flex items-center gap-2">
-                            <span class="text-lg">☕</span> Manage Breaks
+                            <i class="fas fa-coffee text-primary mr-1"></i> Manage Breaks
                         </h2>
                     </div>
 
@@ -382,13 +503,14 @@
                     @else
                         <div class="theme-app bg-secondary-gradient text-primary p-4 rounded-lg text-center mb-4">
                             <div class="text-lg font-bold mb-3 text-primary">
-                                🔄 On {{ $activeBreak->break_type }} break since
+                                <i class="fas fa-coffee text-primary mr-1"></i> On {{ $activeBreak->break_type }} break since
                                 {{ \Carbon\Carbon::parse($activeBreak->break_start)->format('h:i A') }}
                             </div>
                             <form method="POST" action="{{ route('attendance.endBreak') }}">
                                 @csrf
-                                <button type="submit" class="punch-button px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg">
-                                    ⏹️ End Break
+                                <button type="submit"
+                                    class="punch-button px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg">
+                                    <i class="fas fa-stop-circle text-red-600 mr-1"></i> End Break
                                 </button>
                             </form>
                         </div>
@@ -403,36 +525,66 @@
         </div>
     </div>
 
+    <div id="infoAlertModal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="info-modal-title">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="relative bg-white rounded-lg shadow-xl transform transition-all w-full max-w-md mx-auto">
+                <div class="px-4 pt-5 pb-4 sm:p-6">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 sm:mx-0">
+                            <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 18a9 9 0 110-18 9 9 0 010 18z" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="info-modal-title">Notice</h3>
+                            <div class="mt-2">
+                                <p id="infoAlertMessage" class="text-sm text-gray-600"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                        <button type="button" id="infoAlertOkBtn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm transition-all duration-200 hover:scale-105">
+                            OK
+                        </button>
+                        <button type="button" id="infoAlertCancelBg" class="sr-only">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         function updateClocks() {
             const now = new Date();
-            
             let hours = now.getHours();
             let minutes = now.getMinutes();
             let seconds = now.getSeconds();
             const ampm = hours >= 12 ? 'PM' : 'AM';
 
             const displayHours = hours % 12 || 12;
-            
-            const formattedTime = 
+
+            const formattedTime =
                 displayHours.toString().padStart(2, '0') + ':' +
                 minutes.toString().padStart(2, '0') + ':' +
                 seconds.toString().padStart(2, '0');
-            
+
             document.getElementById('digital-time').textContent = formattedTime;
             document.getElementById('digital-ampm').textContent = ampm;
-            
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             };
             document.getElementById('digital-date').textContent = now.toLocaleDateString('en-US', options);
-            
+
             const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             document.getElementById('timezone').textContent = timezone;
-            
+
             const offset = -now.getTimezoneOffset() / 60;
             const offsetString = `UTC${offset >= 0 ? '+' : ''}${offset}`;
             document.getElementById('utc-offset').textContent = offsetString;
@@ -468,10 +620,11 @@
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const punchIn = new Date("{{ $attendanceToday->punch_in }}");
-                const punchOut = {{ $attendanceToday->punch_out ? "new Date('{$attendanceToday->punch_out}')" : 'null' }};
+                const punchOut =
+                    {{ $attendanceToday->punch_out ? "new Date('{$attendanceToday->punch_out}')" : 'null' }};
                 const activeBreakStart = {{ $activeBreakStart ? "new Date('{$activeBreakStart}')" : 'null' }};
                 const workTimeEl = document.getElementById("workTime");
-                
+
                 function updateWorkTimer() {
                     const now = new Date();
                     let activeBreakSeconds = 0;
@@ -498,9 +651,10 @@
     @if ($activeBreak)
         <script>
             document.addEventListener("DOMContentLoaded", function() {
-                const breakStart = new Date("{{ \Carbon\Carbon::parse($activeBreak->break_start)->format('Y-m-d H:i:s') }}");
+                const breakStart = new Date(
+                    "{{ \Carbon\Carbon::parse($activeBreak->break_start)->format('Y-m-d H:i:s') }}");
                 const breakTimerEl = document.getElementById('breakTimer');
-                
+
                 function updateBreakTimer() {
                     const now = new Date();
                     const diff = Math.floor((now - breakStart) / 1000);
@@ -530,7 +684,7 @@
             const punchInDate = punchInAgainStr ? new Date(punchInAgainStr) : null;
             const punchOutDate = punchOutAgainStr ? new Date(punchOutAgainStr) : null;
             const extraWorkTimeEl = document.getElementById("extraWorkTime");
-            
+
             function updateExtraWorkTimer() {
                 const now = new Date();
                 const effectiveEnd = punchOutDate ?? now;
@@ -545,11 +699,83 @@
                 }
             }
             if (punchInDate && !punchOutDate) {
-                updateExtraWorkTimer(); 
-                setInterval(updateExtraWorkTimer, 1000); 
+                updateExtraWorkTimer();
+                setInterval(updateExtraWorkTimer, 1000);
             } else if (punchInDate && punchOutDate) {
-                updateExtraWorkTimer(); 
+                updateExtraWorkTimer();
             }
+        });
+    </script>
+    <script>
+        document.getElementById('punchInBtn').addEventListener('click', function(e) {
+            const locationType = document.getElementById('location_type').value;
+            const gpsStatus = document.getElementById('gps-status');
+
+            if (!locationType) {
+                showInfoModal("Please select your work location (Home or Company).");
+                document.getElementById('location_type').focus();
+                return;
+            }
+
+            gpsStatus.innerHTML = '<span class="text-blue-500">🔄</span> Getting your location...';
+            gpsStatus.className = 'flex items-center gap-2 text-xs text-blue-600';
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('latitude').value = position.coords.latitude;
+                    document.getElementById('longitude').value = position.coords.longitude;
+
+                    gpsStatus.innerHTML =
+                        '<span class="text-green-500">✅</span> Location captured successfully!';
+                    gpsStatus.className = 'flex items-center gap-2 text-xs text-green-600';
+
+                    setTimeout(() => {
+                        document.getElementById('punchInForm').submit();
+                    }, 500);
+                }, function(error) {
+                    gpsStatus.innerHTML =
+                        '<span class="text-red-500">❌</span> Unable to get location. Please enable GPS.';
+                    gpsStatus.className = 'flex items-center gap-2 text-xs text-red-600';
+                    showInfoModal("Unable to get your location. Please enable GPS and try again.");
+                });
+            } else {
+                gpsStatus.innerHTML = '<span class="text-red-500">❌</span> Geolocation not supported.';
+                gpsStatus.className = 'flex items-center gap-2 text-xs text-red-600';
+                showInfoModal("Geolocation is not supported by this browser.");
+            }
+        });
+
+        function showInfoModal(message) {
+            $('#infoAlertMessage').text(message || 'Notice');
+            $('#infoAlertModal').removeClass('hidden').hide().fadeIn(250);
+            $('body').addClass('overflow-hidden');
+        }
+
+        function closeInfoModal() {
+            $('#infoAlertModal').fadeOut(250, function() {
+                $(this).addClass('hidden');
+                $('body').removeClass('overflow-hidden');
+            });
+        }
+
+        $(document).ready(function() {
+            $('#infoAlertOkBtn').on('click', function() {
+                closeInfoModal();
+            });
+
+            // Close when clicking on the overlay background
+            $('#infoAlertModal').on('click', function(e) {
+                if ($(e.target).hasClass('fixed') && $(e.target).hasClass('inset-0')) {
+                    closeInfoModal();
+                }
+            });
+
+            // ESC key to close
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape' && !$('#infoAlertModal').hasClass('hidden')) {
+                    closeInfoModal();
+                }
+            });
         });
     </script>
 </x-app-layout>

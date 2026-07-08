@@ -9,15 +9,12 @@ class Timesheet extends Model
     protected $fillable = [
         'user_id',
         'task_id',
+        'project_id',
         'date',
         'hours_worked',
         'description',
         'status',
     ];
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -25,5 +22,10 @@ class Timesheet extends Model
     public function task()
     {
         return $this->belongsTo(Task::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }
